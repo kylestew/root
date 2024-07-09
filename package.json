@@ -1,0 +1,12 @@
+{
+    "name": "root",
+    "version": "0.0.1",
+    "description": "Root of it all",
+    "main": "src/index.ts",
+    "type": "module",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC"
+}
