@@ -10,6 +10,14 @@
         "./geo": {
             "types": "./dist/geo/index.d.ts",
             "default": "./dist/geo/index.js"
+        },
+        "./array": {
+            "types": "./dist/array/index.d.ts",
+            "default": "./dist/array/index.js"
+        },
+        "./random": {
+            "types": "./dist/random/index.d.ts",
+            "default": "./dist/random/index.js"
         }
     },
     "type": "module",
