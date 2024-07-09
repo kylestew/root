@@ -2,11 +2,24 @@
     "name": "root",
     "version": "0.0.1",
     "description": "Root of it all",
-    "main": "src/index.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.js"
+        },
+        "./geo": {
+            "types": "./dist/geo/index.d.ts",
+            "default": "./dist/geo/index.js"
+        }
+    },
     "type": "module",
     "scripts": {
+        "build": "npx tsc",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "",
-    "license": "ISC"
+    "license": "ISC",
+    "devDependencies": {
+        "typescript": "^5.5.3"
+    }
 }
