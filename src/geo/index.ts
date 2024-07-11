@@ -8,6 +8,7 @@ export { Quadratic } from './shapes/Quadratic'
 export { Rectangle } from './shapes/Rectangle'
 
 export { area } from './ops/area'
+export { asPath } from './ops/asPath'
 export { asPoints } from './ops/asPoints'
 export { pointAt } from './ops/pointAt'
 export { resample } from './ops/resample'

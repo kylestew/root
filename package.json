@@ -18,6 +18,10 @@
         "./random": {
             "types": "./dist/random/index.d.ts",
             "default": "./dist/random/index.js"
+        },
+        "./canvas": {
+            "types": "./dist/canvas/index.d.ts",
+            "default": "./dist/canvas/index.js"
         }
     },
     "type": "module",
