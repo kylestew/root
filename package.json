@@ -7,13 +7,17 @@
             "types": "./dist/index.d.ts",
             "default": "./dist/index.js"
         },
+        "./array": {
+            "types": "./dist/array/index.d.ts",
+            "default": "./dist/array/index.js"
+        },
         "./geo": {
             "types": "./dist/geo/index.d.ts",
             "default": "./dist/geo/index.js"
         },
-        "./array": {
-            "types": "./dist/array/index.d.ts",
-            "default": "./dist/array/index.js"
+        "./math": {
+            "types": "./dist/math/index.d.ts",
+            "default": "./dist/math/index.js"
         },
         "./random": {
             "types": "./dist/random/index.d.ts",
