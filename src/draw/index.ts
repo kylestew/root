@@ -63,7 +63,17 @@ export function draw(
     }
 
     // else, needs to be a shape to draw
-    if (!(geo instanceof Arc || geo instanceof Circle)) {
+    if (
+        !(
+            geo instanceof Arc ||
+            geo instanceof Circle ||
+            geo instanceof Ellipse ||
+            geo instanceof Line ||
+            geo instanceof Polygon ||
+            geo instanceof Polyline ||
+            geo instanceof Rectangle
+        )
+    ) {
         ctx.restore()
         return
     }

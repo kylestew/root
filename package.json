@@ -19,6 +19,10 @@
             "types": "./dist/random/index.d.ts",
             "default": "./dist/random/index.js"
         },
+        "./color": {
+            "types": "./dist/color/index.d.ts",
+            "default": "./dist/color/index.js"
+        },
         "./canvas": {
             "types": "./dist/canvas/index.d.ts",
             "default": "./dist/canvas/index.js"
