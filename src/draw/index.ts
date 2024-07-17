@@ -119,7 +119,7 @@ export function draw(
     ctx.restore()
 }
 
-export function clear(ctx: CanvasRenderingContext2D, clearColor: string) {
+export function clear(ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D, clearColor: string) {
     // Save the current transformation matrix
     ctx.save()
     // Reset the transformation matrix to the default state

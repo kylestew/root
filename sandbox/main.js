@@ -1,46 +1,42 @@
-import { createCanvas } from 'root/canvas'
-import { Grid, Circle, offset, withAttribs } from 'root/geo'
+import { createGLCanvas, createOffscreenCanvas } from 'root/canvas'
+import { Line } from '../dist/geo'
+import { weightedRandom, pickRandom, gaussian } from 'root/random'
+// import { Grid, Circle, offset, withAttribs } from 'root/geo'
 
-const cmd = createCanvas(1200, 1400)
-const { rect } = cmd.setRange(-1, 1)
+import vertShaderSource from './basic.vert?raw'
+import fragShaderSource from './crop_circles.frag?raw'
 
-const palette = {
-    background: '#d7d3c7',
-    white: '#dad9d7',
-}
-const colors = ['#0c2d5b', '#ddad26', '#c75b16', '#ddad26', '#0c2d5b']
+const mainCanvas = document.getElementById('mainCanvas')
 
-// circles pattern found experimentally
-function circlesMaskPattern() {
-    let circles = []
-    const colSpace = 0.285
-    const rowSpace = 0.08
-    for (let row = 0; row < 28; row++) {
-        const flipped = row % 2 ? 0 : colSpace / 2
-        for (let col = 0; col < 9; col++) {
-            const x = -1 + colSpace * col + flipped
-            const y = -0.04 + -1 + rowSpace * row
-            const center = [x, y]
-            const radius = 0.075
-            const circle = new Circle(center, radius)
-            circles.push(circle)
-        }
-    }
-    return circles
-}
+const gl = createGLCanvas(1200, 1600, mainCanvas)
+const shader = gl.loadShader(vertShaderSource, fragShaderSource)
 
-cmd.clear(palette.background)
+const canvasA = createOffscreenCanvas(1200, 1600, [-1, 1])
+const canvasB = createOffscreenCanvas(1200, 1600, [-1, 1])
 
-// draw background rect
-cmd.draw(offset(rect, -0.2), { fill: palette.white })
+canvasA.clear('#ff0000')
+canvasB.clear('#00ff00')
 
-// draw colored strips over top
-const innerRect = offset(rect, -0.3)
-const grid = new Grid(innerRect.pos, innerRect.size, 1, 5)
-const strips = grid.cells().map(({ index, rect }) => {
-    return withAttribs(rect, { fill: colors[index % colors.length] })
-})
-cmd.draw(strips)
+gl.clear([0, 0, 0, 1])
+gl.useShader(shader)
 
-// "cut out" the circles by drawing them with the background color
-cmd.draw(circlesMaskPattern(), { fill: palette.background })
+gl.useTexture(gl.TEXTURE0, 'tex0', canvasA.canvas)
+gl.useTexture(gl.TEXTURE1, 'tex1', canvasB.canvas)
+
+// (1) Create a diagonal line
+// random forward or reverse angle, randomized length
+const lineLength = weightedRandom([1.4, 1.6, 1.8], [2, 6, 1])
+const splitAngle = pickRandom([(2.0 * Math.PI) / 3 + gaussian(0, 0.15), Math.PI / 3 + gaussian(0, 0.15)])
+const splitCenter = [gaussian(0, 0.08), gaussian(0, 0.08)]
+const diagonal = Line.withCenter(splitCenter, splitAngle, lineLength)
+const inverted = Math.random() < 0.1
+
+// NOTE: this is hardcoded for the given canvas ratio
+const canvasTransform = new Float32Array([2.0, 0.0, 0.0, 0.0, 2.0 * 1.333, 0.0, -1.0, -1.333, 1.0])
+gl.setUniform('canvasTransform', canvasTransform)
+gl.setUniform('center', splitCenter)
+gl.setUniform('angle', splitAngle)
+gl.setUniform('smoothness', 0.002)
+gl.setUniform('invert', inverted)
+
+gl.drawScreen()

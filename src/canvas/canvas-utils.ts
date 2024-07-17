@@ -10,7 +10,9 @@ interface CanvasRangeInfo {
 
 interface CanvasCommands {
     ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D
-    setRange: (min: number, max: number) => CanvasRangeInfo
+    canvas: HTMLCanvasElement | OffscreenCanvas
+    range: CanvasRangeInfo | undefined
+    setRange: (range: [number, number]) => CanvasRangeInfo
     clear: (clearColor: string) => void
     draw: (geo: GeoData, attribs: Attribs) => void
 }
@@ -26,7 +28,12 @@ interface CanvasCommands {
  * @returns The rendering context of the created canvas.
  * @throws {Error} If canvas is not supported in the browser.
  */
-export function createCanvas(width: number, height: number, existingCanvas: HTMLCanvasElement): CanvasCommands {
+export function createCanvas(
+    width: number,
+    height: number,
+    existingCanvas: HTMLCanvasElement | undefined = undefined,
+    range: [number, number] | undefined = undefined
+): CanvasCommands {
     // setup or bind to existing canvas
     let canvas = existingCanvas
     if (!canvas) {
@@ -45,48 +52,55 @@ export function createCanvas(width: number, height: number, existingCanvas: HTML
         throw new Error('Canvas not supported in this browser!')
     }
 
+    let rangeInfo: CanvasRangeInfo | undefined
+    if (range != undefined) {
+        rangeInfo = setCanvasRange(ctx, range)
+    }
+
     return {
         ctx,
-        setRange: (min: number, max: number) => setCanvasRange(ctx, min, max),
+        canvas,
+        range: rangeInfo,
+        setRange: (range: [number, number]) => setCanvasRange(ctx, range),
         clear: (clearColor: string) => clear(ctx, clearColor),
         draw: (geo: GeoData, attribs: Attribs) => draw(ctx, geo, attribs),
     }
 }
 
-// /**
-//  * Creates an offscreen canvas with the specified width and height.
-//  *
-//  * @param width - The width of the offscreen canvas.
-//  * @param height - The height of the offscreen canvas.
-//  * @param clearColor - The color used to clear the offscreen canvas. Defaults to 'black'.
-//  *
-//  * @returns The OffscreenCanvasRenderingContext2D object representing the offscreen canvas.
-//  * @throws Error if the OffscreenCanvasRenderingContext2D cannot be created.
-//  */
-// export function createOffscreenCanvas(
-//     width: number,
-//     height: number,
-//     clearColor: string = 'white'
-// ): OffscreenCanvasRenderingContext2D {
-//     const offscreenCanvas = new OffscreenCanvas(width, height)
-//     const offCtx = offscreenCanvas.getContext('2d', { willReadFrequently: true })
-//     if (!offCtx) {
-//         throw new Error('Could not create OffscreenCanvasRenderingContext2D')
-//     }
-//     offCtx.clearRect(0, 0, width, height)
-//     offCtx.setRange = setCanvasRange.bind(offCtx)
-//     offCtx.clear = clear.bind(offCtx)
-//     offCtx.draw = (...params) => draw(offCtx, ...params)
-// return offCtx
-// }
+/**
+ * Creates an offscreen canvas with the specified width and height.
+ *
+ * @param width - The width of the offscreen canvas.
+ * @param height - The height of the offscreen canvas.
+ *
+ * @returns The OffscreenCanvasRenderingContext2D object representing the offscreen canvas.
+ * @throws Error if the OffscreenCanvasRenderingContext2D cannot be created.
+ */
+export function createOffscreenCanvas(
+    width: number,
+    height: number,
+    range: [number, number] | undefined = undefined
+): CanvasCommands {
+    const canvas = new OffscreenCanvas(width, height)
+    const ctx = canvas.getContext('2d', { willReadFrequently: true })
+    if (!ctx) {
+        throw new Error('Could not create OffscreenCanvasRenderingContext2D')
+    }
 
-// interface CanvasInfo {
-//     min: [number, number]
-//     max: [number, number]
-//     xRange: number
-//     yRange: number
-//     //         span, // Add the span to the canvasInfo
-// }
+    let rangeInfo: CanvasRangeInfo | undefined
+    if (range != undefined) {
+        rangeInfo = setCanvasRange(ctx, range)
+    }
+
+    return {
+        ctx,
+        canvas,
+        range: rangeInfo,
+        setRange: (range: [number, number]) => setCanvasRange(ctx, range),
+        clear: (clearColor: string) => clear(ctx, clearColor),
+        draw: (geo: GeoData, attribs: Attribs) => draw(ctx, geo, attribs),
+    }
+}
 
 /**
  * Sets the canvas range for a given CanvasRenderingContext2D.
@@ -94,10 +108,14 @@ export function createCanvas(width: number, height: number, existingCanvas: HTML
  * and flips the Y axis.
  *
  * @param ctx - The CanvasRenderingContext2D to set the range for.
- * @param min - The minimum value of the range.
- * @param max - The maximum value of the range.
+ * @param range - The minimum and maximum values of the range.
  */
-function setCanvasRange(ctx: CanvasRenderingContext2D, min: number, max: number): CanvasRangeInfo {
+function setCanvasRange(
+    ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
+    range: [number, number]
+): CanvasRangeInfo {
+    const [min, max] = range
+
     // Retrieve the canvas dimensions from the context
     const width = ctx.canvas.width
     const height = ctx.canvas.height
