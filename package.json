@@ -30,6 +30,10 @@
         "./canvas": {
             "types": "./dist/canvas/index.d.ts",
             "default": "./dist/canvas/index.js"
+        },
+        "./algos": {
+            "types": "./dist/algos/index.d.ts",
+            "default": "./dist/algos/index.js"
         }
     },
     "type": "module",

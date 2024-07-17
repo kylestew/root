@@ -33,23 +33,23 @@ export function full(count: number, callbackOrValue: Function | any) {
     return result
 }
 
-// /**
-//  * Generates N evenly spaced numbers within a specified range.
-//  *
-//  * @param {number} start - The starting value of the range.
-//  * @param {number} stop - The ending value of the range.
-//  * @param {number} num - The number of elements in the range.
-//  * @param {boolean} [endpoint=true] - Whether or not to include the endpoint in the range.
-//  * @returns {Array} - The generated range array.
-//  */
-// export function linspace(start, stop, num, endpoint = true) {
-//     const step = (stop - start) / (num - (endpoint ? 1 : 0))
-//     const result = []
-//     for (let i = 0; i < num; i++) {
-//         result.push(start + i * step)
-//     }
-//     return result
-// }
+/**
+ * Generates N evenly spaced numbers within a specified range.
+ *
+ * @param {number} start - The starting value of the range.
+ * @param {number} stop - The ending value of the range.
+ * @param {number} num - The number of elements in the range.
+ * @param {boolean} [endpoint=true] - Whether or not to include the endpoint in the range.
+ * @returns {Array} - The generated range array.
+ */
+export function linspace(start: number, stop: number, num: number, endpoint = true) {
+    const step = (stop - start) / (num - (endpoint ? 1 : 0))
+    const result = []
+    for (let i = 0; i < num; i++) {
+        result.push(start + i * step)
+    }
+    return result
+}
 
 // /**
 //  * Generates an array of numbers within a specified range using a step size.
@@ -266,21 +266,20 @@ export function full(count: number, callbackOrValue: Function | any) {
  * @param {Array} array2 - The second array.
  * @returns {Array} - The interleaved array.
  */
-// export function interleave(array1, array2) {
-//     const result = []
-//     const maxLength = Math.max(array1.length, array2.length)
+export function interleave(array1: any[], array2: any[]) {
+    const result = []
 
-//     for (let i = 0, j = 0; i < array1.length || j < array2.length; ) {
-//         if (i < array1.length) {
-//             result.push(array1[i++])
-//         }
-//         if (j < array2.length) {
-//             result.push(array2[j++])
-//         }
-//     }
+    for (let i = 0, j = 0; i < array1.length || j < array2.length; ) {
+        if (i < array1.length) {
+            result.push(array1[i++])
+        }
+        if (j < array2.length) {
+            result.push(array2[j++])
+        }
+    }
 
-//     return result
-// }
+    return result
+}
 
 /**
  * Zips multiple arrays together, creating an array of tuples.
@@ -328,13 +327,13 @@ export function zip(...arrays: any[]) {
  * @param {number} n - The number of elements to skip between each selected element.
  * @returns {Array} - A new array containing every nth element from the input array.
  */
-// export function takeEvery(array, n) {
-//     const result = []
-//     for (let i = 0; i < array.length; i += n) {
-//         result.push(array[i])
-//     }
-//     return result
-// }
+export function takeEvery(array: any[], n: number) {
+    const result = []
+    for (let i = 0; i < array.length; i += n) {
+        result.push(array[i])
+    }
+    return result
+}
 
 /**
  * Splits an array into smaller arrays of size N.

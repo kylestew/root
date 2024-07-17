@@ -1,12 +1,11 @@
 import { GeoData, Attribs } from '../geo/types'
+import { Rectangle } from '../geo/index'
 import { draw, clear } from '../draw/index'
-
-// import { installSaveCanvasCommand } from './canvas-save'
-// import { installValuesCheck } from './values-check'
 
 interface CanvasRangeInfo {
     xRange: [number, number]
     yRange: [number, number]
+    rect: Rectangle
 }
 
 interface CanvasCommands {
@@ -142,8 +141,10 @@ function setCanvasRange(ctx: CanvasRenderingContext2D, min: number, max: number)
         xRange = [min * rescaleFactor, max * rescaleFactor]
     }
 
+    const rect = new Rectangle([xRange[0], yRange[0]], [xRange[1] - xRange[0], yRange[1] - yRange[0]])
     return {
         xRange,
         yRange,
+        rect,
     }
 }
