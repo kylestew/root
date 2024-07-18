@@ -1,6 +1,6 @@
 import { GeoData, Attribs } from '../geo/types'
 import { Rectangle } from '../geo/index'
-import { draw, clear } from '../draw/index'
+import { draw, clear } from './draw'
 
 interface CanvasRangeInfo {
     xRange: [number, number]

@@ -246,19 +246,19 @@ export function linspace(start: number, stop: number, num: number, endpoint = tr
  * @param {Array} array - The array to be shuffled.
  * @returns {Array} - The shuffled array (copied).
  */
-// export function shuffle(array) {
-//     // Make a copy of the array
-//     let copiedArray = [...array]
+export function shuffle(array: any[]) {
+    // Make a copy of the array
+    let copiedArray = [...array]
 
-//     for (let i = copiedArray.length - 1; i > 0; i--) {
-//         // Generate a random index from 0 to i
-//         const j = Math.floor(Math.random() * (i + 1))
-//         // Swap elements at indices i and j
-//         ;[copiedArray[i], copiedArray[j]] = [copiedArray[j], copiedArray[i]]
-//     }
+    for (let i = copiedArray.length - 1; i > 0; i--) {
+        // Generate a random index from 0 to i
+        const j = Math.floor(Math.random() * (i + 1))
+        // Swap elements at indices i and j
+        ;[copiedArray[i], copiedArray[j]] = [copiedArray[j], copiedArray[i]]
+    }
 
-//     return copiedArray
-// }
+    return copiedArray
+}
 
 /**
  * Interleaves two arrays by alternating their elements.

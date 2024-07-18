@@ -34,6 +34,10 @@
         "./algos": {
             "types": "./dist/algos/index.d.ts",
             "default": "./dist/algos/index.js"
+        },
+        "./mark": {
+            "types": "./dist/mark/index.d.ts",
+            "default": "./dist/mark/index.js"
         }
     },
     "type": "module",

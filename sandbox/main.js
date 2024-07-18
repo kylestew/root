@@ -17,12 +17,6 @@ const canvasB = createOffscreenCanvas(1200, 1600, [-1, 1])
 canvasA.clear('#ff0000')
 canvasB.clear('#00ff00')
 
-gl.clear([0, 0, 0, 1])
-gl.useShader(shader)
-
-gl.useTexture(gl.TEXTURE0, 'tex0', canvasA.canvas)
-gl.useTexture(gl.TEXTURE1, 'tex1', canvasB.canvas)
-
 // (1) Create a diagonal line
 // random forward or reverse angle, randomized length
 const lineLength = weightedRandom([1.4, 1.6, 1.8], [2, 6, 1])
@@ -30,6 +24,13 @@ const splitAngle = pickRandom([(2.0 * Math.PI) / 3 + gaussian(0, 0.15), Math.PI 
 const splitCenter = [gaussian(0, 0.08), gaussian(0, 0.08)]
 const diagonal = Line.withCenter(splitCenter, splitAngle, lineLength)
 const inverted = Math.random() < 0.1
+
+// DRAW IT
+gl.clear([0, 0, 0, 1])
+gl.useShader(shader)
+
+gl.useTexture(gl.TEXTURE0, 'tex0', canvasA.canvas)
+gl.useTexture(gl.TEXTURE1, 'tex1', canvasB.canvas)
 
 // NOTE: this is hardcoded for the given canvas ratio
 const canvasTransform = new Float32Array([2.0, 0.0, 0.0, 0.0, 2.0 * 1.333, 0.0, -1.0, -1.333, 1.0])
