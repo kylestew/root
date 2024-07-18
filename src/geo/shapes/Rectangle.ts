@@ -13,9 +13,16 @@ export class Rectangle {
      * @param {Vec2} size - The size of the Rectangle.
      * @param {Attribs} [attribs={}] - Optional attributes for the curve.
      */
-    constructor(pos: Vec2, size: Vec2, attribs: Attribs = {}) {
-        this.pos = pos
-        this.size = size
+    constructor(pos: number[], size: number[], attribs: Attribs = {}) {
+        if (pos.length !== 2) {
+            throw new Error('Position array must have exactly two elements.')
+        }
+        if (size.length !== 2) {
+            throw new Error('Size array must have exactly two elements.')
+        }
+
+        this.pos = pos as Vec2
+        this.size = size as Vec2
         this.attribs = attribs
     }
 

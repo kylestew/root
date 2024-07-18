@@ -20,14 +20,14 @@ export const normalize = (v: number[]) => {
 
 export const add = (v1: number[], v2: number[]) => v1.map((x, i) => x + v2[i])
 export const sub = (v1: number[], v2: number[]) => v1.map((val, i) => val - v2[i])
-// export const mul = (v1, v2) => v1.map((x, i) => x * v2[i])
-// export const div = (v1, v2) => v1.map((x, i) => x / v2[i])
+export const mul = (v1: number[], v2: number[]) => v1.map((x, i) => x * v2[i])
+export const div = (v1: number[], v2: number[]) => v1.map((x, i) => x / v2[i])
 // export const dot = (v1, v2) => v1.reduce((acc, val, i) => acc + val * v2[i], 0)
 
 export const addN = (v: number[], n: number) => v.map((x) => x + n)
+export const subN = (v: number[], n: number) => v.map((x) => x - n)
+export const mulN = (v: number[], n: number) => v.map((x) => x * n)
 export const divN = (v: number[], n: number) => v.map((x) => x / n)
-// export const mulN = (v, n) => v.map((x) => x * n)
-// export const subN = (v, n) => v.map((x) => x - n)
 // export const neg = (v) => mulN(v, -1)
 
 // export const floor = (v) => v.map(Math.floor)
