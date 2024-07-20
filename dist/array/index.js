@@ -13,7 +13,6 @@
  * rotate(array, positions) - Rotates an array by a given number of positions.
  * takeEvery(array, n) - Takes every nth element from an array and returns a new array.
  */
-
 /**
  * Prefills a new array with values returned by a callback function or a provided value.
  *
@@ -21,18 +20,18 @@
  * @param {Function|any} callbackOrValue - The callback function or value that returns the value for each element.
  * @returns {Array} - The prefilled array.
  */
-export function full(count: number, callbackOrValue: Function | any) {
-    const result = []
+export function full(count, callbackOrValue) {
+    const result = [];
     for (let i = 0; i < count; i++) {
         if (typeof callbackOrValue === 'function') {
-            result.push(callbackOrValue())
-        } else {
-            result.push(callbackOrValue)
+            result.push(callbackOrValue());
+        }
+        else {
+            result.push(callbackOrValue);
         }
     }
-    return result
+    return result;
 }
-
 /**
  * Generates N evenly spaced numbers within a specified range.
  *
@@ -42,15 +41,14 @@ export function full(count: number, callbackOrValue: Function | any) {
  * @param {boolean} [endpoint=true] - Whether or not to include the endpoint in the range.
  * @returns {Array} - The generated range array.
  */
-export function linspace(start: number, stop: number, num: number, endpoint = true) {
-    const step = (stop - start) / (num - (endpoint ? 1 : 0))
-    const result = []
+export function linspace(start, stop, num, endpoint = true) {
+    const step = (stop - start) / (num - (endpoint ? 1 : 0));
+    const result = [];
     for (let i = 0; i < num; i++) {
-        result.push(start + i * step)
+        result.push(start + i * step);
     }
-    return result
+    return result;
 }
-
 /**
  * Generates an array of numbers within a specified range using a step size.
  *
@@ -60,23 +58,21 @@ export function linspace(start: number, stop: number, num: number, endpoint = tr
  * @returns {number[]} - An array of numbers within the specified range.
  * @throws {Error} - If the step size is not positive.
  */
-export function range(from: number, to: number, step = 1) {
+export function range(from, to, step = 1) {
     // overload arguments
     if (arguments.length === 1) {
-        to = from
-        from = 0
+        to = from;
+        from = 0;
     }
     if (step <= 0) {
-        throw new Error('Step size must be positive')
+        throw new Error('Step size must be positive');
     }
-
-    var res = []
+    var res = [];
     for (var i = from; i < to; i += step) {
-        res.push(i)
+        res.push(i);
     }
-    return res
+    return res;
 }
-
 // /**
 //  * Generates a 2D range array based on the given x and y ranges.
 //  * @param {number|Array<number>} xRange - The range of values for the x-axis. Can be a single number or a tuple [start, end].
@@ -97,7 +93,6 @@ export function range(from: number, to: number, step = 1) {
 //     } else {
 //         throw new Error('Invalid xRange argument: must be a number or a tuple [start, end]')
 //     }
-
 //     // Handle yRange being a single number or a tuple
 //     let startY, endY
 //     if (Array.isArray(yRange) && yRange.length === 2) {
@@ -108,7 +103,6 @@ export function range(from: number, to: number, step = 1) {
 //     } else {
 //         throw new Error('Invalid yRange argument: must be a number or a tuple [start, end]')
 //     }
-
 //     // Generate the 2D range array
 //     const result = []
 //     for (let y = startY; y <= endY; y += stepY) {
@@ -118,7 +112,6 @@ export function range(from: number, to: number, step = 1) {
 //     }
 //     return result
 // }
-
 // /**
 //  * Generates an array of numbers within a specified range using a step function.
 //  *
@@ -136,7 +129,6 @@ export function range(from: number, to: number, step = 1) {
 //         to = from
 //         from = 0
 //     }
-
 //     var res = []
 //     var current = from
 //     while (current < to) {
@@ -149,7 +141,6 @@ export function range(from: number, to: number, step = 1) {
 //     }
 //     return res
 // }
-
 /**
  * Creates overlapping and non-overlapping sliding windows
  * of inputs. Window size and progress speed can be configured via
@@ -204,7 +195,6 @@ export function range(from: number, to: number, step = 1) {
 //     }
 //     return res
 // }
-
 /**
  * Wraps elements from the start and end of an array to the other side.
  * @param {Array} src - The source array.
@@ -216,71 +206,57 @@ export function range(from: number, to: number, step = 1) {
 //     if (!Array.isArray(src)) {
 //         throw new Error('src must be an array')
 //     }
-
 //     const len = src.length
 //     if (numLeft < 0 || numRight < 0 || numLeft > len || numRight > len) {
 //         throw new Error(`allowed wrap range: [0..${len}]`)
 //     }
-
 //     const result = []
-
 //     // Add elements from the end to the start
 //     for (let i = len - numLeft; i < len; i++) {
 //         result.push(src[i])
 //     }
-
 //     // Add the original elements
 //     result.push(...src)
-
 //     // Add elements from the start to the end
 //     for (let i = 0; i < numRight; i++) {
 //         result.push(src[i])
 //     }
-
 //     return result
 // }
-
 /**
  * Returns a copied array with its elements shuffled.
  *
  * @param {Array} array - The array to be shuffled.
  * @returns {Array} - The shuffled array (copied).
  */
-export function shuffle(array: any[]) {
+export function shuffle(array) {
     // Make a copy of the array
-    let copiedArray = [...array]
-
+    let copiedArray = [...array];
     for (let i = copiedArray.length - 1; i > 0; i--) {
         // Generate a random index from 0 to i
-        const j = Math.floor(Math.random() * (i + 1))
-        // Swap elements at indices i and j
-        ;[copiedArray[i], copiedArray[j]] = [copiedArray[j], copiedArray[i]]
+        const j = Math.floor(Math.random() * (i + 1));
+        [copiedArray[i], copiedArray[j]] = [copiedArray[j], copiedArray[i]];
     }
-
-    return copiedArray
+    return copiedArray;
 }
-
 /**
  * Interleaves two arrays by alternating their elements.
  * @param {Array} array1 - The first array.
  * @param {Array} array2 - The second array.
  * @returns {Array} - The interleaved array.
  */
-export function interleave(array1: any[], array2: any[]) {
-    const result = []
-
-    for (let i = 0, j = 0; i < array1.length || j < array2.length; ) {
+export function interleave(array1, array2) {
+    const result = [];
+    for (let i = 0, j = 0; i < array1.length || j < array2.length;) {
         if (i < array1.length) {
-            result.push(array1[i++])
+            result.push(array1[i++]);
         }
         if (j < array2.length) {
-            result.push(array2[j++])
+            result.push(array2[j++]);
         }
     }
-
-    return result
+    return result;
 }
-
 /**
  * Zips multiple arrays together, creating an array of tuples.
  * Stops at the shortest array length when arrays are uneven.
@@ -288,17 +264,14 @@ export function interleave(array1: any[], array2: any[]) {
  * @param {...any[]} arrays - The arrays to zip together.
  * @returns {any[]} - The zipped array.
  */
-export function zip(...arrays: any[]) {
-    const minLength = Math.min(...arrays.map((arr) => arr.length))
-    const zipped = []
-
+export function zip(...arrays) {
+    const minLength = Math.min(...arrays.map((arr) => arr.length));
+    const zipped = [];
     for (let i = 0; i < minLength; i++) {
-        zipped.push(arrays.map((arr) => arr[i]))
+        zipped.push(arrays.map((arr) => arr[i]));
     }
-
-    return zipped
+    return zipped;
 }
-
 /**
  * Rotates an array by a given number of positions.
  *
@@ -306,20 +279,19 @@ export function zip(...arrays: any[]) {
  * @param {number} positions - The number of positions to rotate the array. Positive values rotate to the right, negative values rotate to the left.
  * @returns {Array} - The rotated array.
  */
-export function rotate(array: any[], positions: number) {
-    const length = array.length
-    const normalizedPositions = positions % length
+export function rotate(array, positions) {
+    const length = array.length;
+    const normalizedPositions = positions % length;
     if (normalizedPositions === 0) {
-        return array
+        return array;
     }
-    const rotatedArray = []
+    const rotatedArray = [];
     for (let i = 0; i < length; i++) {
-        const newIndex = (i + normalizedPositions + length) % length
-        rotatedArray[newIndex] = array[i]
+        const newIndex = (i + normalizedPositions + length) % length;
+        rotatedArray[newIndex] = array[i];
     }
-    return rotatedArray
+    return rotatedArray;
 }
-
 /**
  * Takes every nth element from an array and returns a new array (copies array).
  *
@@ -327,14 +299,13 @@ export function rotate(array: any[], positions: number) {
  * @param {number} n - The number of elements to skip between each selected element.
  * @returns {Array} - A new array containing every nth element from the input array.
  */
-export function takeEvery(array: any[], n: number) {
-    const result = []
+export function takeEvery(array, n) {
+    const result = [];
     for (let i = 0; i < array.length; i += n) {
-        result.push(array[i])
+        result.push(array[i]);
     }
-    return result
+    return result;
 }
-
 /**
  * Splits an array into smaller arrays of size N.
  *
@@ -349,7 +320,6 @@ export function takeEvery(array: any[], n: number) {
 //     }
 //     return result
 // }
-
 /**
  * Removes a percentage of elements from an array.
  *
@@ -357,33 +327,26 @@ export function takeEvery(array: any[], n: number) {
  * @param {number} percentToRemove - The percentage of elements to remove. [0, 1]
  * @returns {any[]} - A new array with the randomly selected elements removed.
  */
-export function randomRemove(array: any[], percentToRemove: number) {
+export function randomRemove(array, percentToRemove) {
     if (percentToRemove < 0 || percentToRemove > 1) {
-        throw new Error('Percentage must be between 0 and 1')
+        throw new Error('Percentage must be between 0 and 1');
     }
-
     // Calculate the number of elements to remove based on the percentage
-    const numToRemove = Math.floor(array.length * percentToRemove)
-
+    const numToRemove = Math.floor(array.length * percentToRemove);
     // Make sure not to remove more elements than are in the array
     if (numToRemove >= array.length) {
-        return []
+        return [];
     }
-
     // Create a copy of the array to avoid modifying the original array
-    let arrCopy = array.slice()
-
+    let arrCopy = array.slice();
     // Keep track of indices that have been removed
-    let removedIndices = new Set()
-
+    let removedIndices = new Set();
     // Randomly select indices to remove
     while (removedIndices.size < numToRemove) {
-        let randomIndex = Math.floor(Math.random() * arrCopy.length)
-        removedIndices.add(randomIndex)
+        let randomIndex = Math.floor(Math.random() * arrCopy.length);
+        removedIndices.add(randomIndex);
     }
-
     // Remove the selected elements by creating a new array
-    let result = arrCopy.filter((_, index) => !removedIndices.has(index))
-
-    return result
+    let result = arrCopy.filter((_, index) => !removedIndices.has(index));
+    return result;
 }

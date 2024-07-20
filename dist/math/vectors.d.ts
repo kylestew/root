@@ -1,0 +1,9 @@
+export declare const normalize: (v: number[]) => number[];
+export declare const add: (v1: number[], v2: number[]) => number[];
+export declare const sub: (v1: number[], v2: number[]) => number[];
+export declare const mul: (v1: number[], v2: number[]) => number[];
+export declare const div: (v1: number[], v2: number[]) => number[];
+export declare const addN: (v: number[], n: number) => number[];
+export declare const subN: (v: number[], n: number) => number[];
+export declare const mulN: (v: number[], n: number) => number[];
+export declare const divN: (v: number[], n: number) => number[];
