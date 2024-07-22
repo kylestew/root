@@ -29,8 +29,8 @@ export const divN = (v, n) => v.map((x) => x / n);
 // export const floor = (v) => v.map(Math.floor)
 // export const ceil = (v) => v.map(Math.ceil)
 // export const clamp01 = (v) => v.map((x) => Math.min(1, Math.max(0, x)))
-// export const dist = (v1, v2) => Math.hypot(...sub(v1, v2))
-// export const mag = (v) => Math.hypot(...v)
+export const dist = (v1, v2) => Math.hypot(...sub(v1, v2));
+export const mag = (v) => Math.hypot(...v);
 // /**
 //  * Reflects a vector around a given normal.
 //  * @param {number[]} I - The incident vector.

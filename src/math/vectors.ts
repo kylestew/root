@@ -34,9 +34,8 @@ export const divN = (v: number[], n: number) => v.map((x) => x / n)
 // export const ceil = (v) => v.map(Math.ceil)
 // export const clamp01 = (v) => v.map((x) => Math.min(1, Math.max(0, x)))
 
-// export const dist = (v1, v2) => Math.hypot(...sub(v1, v2))
-
-// export const mag = (v) => Math.hypot(...v)
+export const dist = (v1: number[], v2: number[]) => Math.hypot(...sub(v1, v2))
+export const mag = (v: number[]) => Math.hypot(...v)
 
 // /**
 //  * Reflects a vector around a given normal.

@@ -1,15 +1,18 @@
-import { Circle, Line } from '../geo'
-import { intersects } from '../geo'
+import { Shape } from '../geo/types'
+import { Circle, Line, intersects } from '../geo/index'
 
 export class CircleLinePacking {
-    constructor(obstacles = []) {
+    obstacles: (Circle | Line)[]
+    packed: (Circle | Line)[]
+
+    constructor(obstacles: (Circle | Line)[] = []) {
         this.obstacles = obstacles
         this.packed = []
     }
 
-    attemptPlacement(shape, stepSize, maxSize) {
+    attemptPlacement(shape: Circle | Line, stepSize: number, maxSize: number) {
         let targetShape = shape
-        let placedShape = undefined
+        let placedShape: Circle | Line | undefined = undefined
         while ([...this.obstacles, ...this.packed].every((otherShape) => !intersects(targetShape, otherShape))) {
             placedShape = targetShape
 

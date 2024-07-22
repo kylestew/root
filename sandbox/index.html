@@ -40,5 +40,18 @@
     <body>
         <canvas id="mainCanvas"></canvas>
         <script type="module" src="/main.js"></script>
+        <script type="module">
+            import { createCanvas } from 'root/canvas'
+            import { randomPalette } from './palettes'
+
+            import { circlePacking } from './sketches/circle_packing'
+
+            const mainCanvas = document.getElementById('mainCanvas')
+            const cmd = createCanvas(1200, 1200, mainCanvas, [-1, 1])
+
+            const palette = randomPalette()
+
+            circlePacking(cmd, palette)
+        </script>
     </body>
 </html>
