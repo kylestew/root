@@ -44,14 +44,14 @@
             import { createCanvas } from 'root/canvas'
             import { randomPalette } from './palettes'
 
-            import { circlePacking } from './sketches/circle_packing'
+            import { convexHullDemo } from './sketches/convex_hull'
 
             const mainCanvas = document.getElementById('mainCanvas')
             const cmd = createCanvas(1200, 1200, mainCanvas, [-1, 1])
 
             const palette = randomPalette()
 
-            circlePacking(cmd, palette)
+            convexHullDemo(cmd, palette)
         </script>
     </body>
 </html>

@@ -1,3 +1,4 @@
+import { Vec2 } from '../geo/types';
 /**
  * === RANDOM UTILS ===
  *
@@ -48,7 +49,7 @@ export declare function pickRandom(arr: any[], num?: number): any;
  * @param {[number, number]} [max=[1, 1]] - The maximum values for x and y coordinates.
  * @returns {[number, number]} The randomly generated point as an array of [x, y] coordinates.
  */
-export declare function randomPoint(min?: [number, number], max?: [number, number]): number[];
+export declare function randomPoint(min?: [number, number], max?: [number, number]): Vec2;
 /**
  * Generates a random offset within the specified range.
  *

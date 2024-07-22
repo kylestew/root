@@ -1,3 +1,5 @@
+import { Vec2 } from '../geo/types'
+
 /**
  * === RANDOM UTILS ===
  *
@@ -86,7 +88,7 @@ export function pickRandom(arr: any[], num: number = 1) {
  * @param {[number, number]} [max=[1, 1]] - The maximum values for x and y coordinates.
  * @returns {[number, number]} The randomly generated point as an array of [x, y] coordinates.
  */
-export function randomPoint(min: [number, number] = [0, 0], max: [number, number] = [1, 1]) {
+export function randomPoint(min: [number, number] = [0, 0], max: [number, number] = [1, 1]): Vec2 {
     if (arguments.length === 1) {
         // assume the user passed in a max value
         max = min
