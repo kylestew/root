@@ -1,3 +1,6 @@
+import { Vec2 } from '../geo/types'
+import { Rectangle } from '../geo/index'
+
 /**
  * Performs linear interpolation between two numbers.
  * @param a - The starting value.
@@ -7,6 +10,29 @@
  */
 export function lerp(a: number, b: number, t: number) {
     return a + (b - a) * t
+}
+
+/**
+ * Linearly interpolates between two points.
+ *
+ * @param {number[]} pt1 - The first point.
+ * @param {number[]} pt2 - The second point.
+ * @param {number} pct - The interpolation percentage (between 0 and 1).
+ * @returns {number[]} The interpolated point.
+ */
+export function lerpPt(pt1: Vec2, pt2: Vec2, pct: number) {
+    return [pt1[0] + (pt2[0] - pt1[0]) * pct, pt1[1] + (pt2[1] - pt1[1]) * pct]
+}
+
+/**
+ * Calculates the midpoint between two points.
+ *
+ * @param {number[]} pt1 - The first point, represented as an array of two numbers.
+ * @param {number[]} pt2 - The second point, represented as an array of two numbers.
+ * @returns {number[]} The midpoint between pt1 and pt2, represented as an array of two numbers.
+ */
+export function midPt(pt1: Vec2, pt2: Vec2) {
+    return [(pt1[0] + pt2[0]) / 2, (pt1[1] + pt2[1]) / 2]
 }
 
 /**
@@ -55,37 +81,31 @@ export function mapRange(value: number, low1: number, high1: number, low2: numbe
 //     return [mappedX, mappedY]
 // }
 
-// /**
-//  * Linearly interpolates between two points.
-//  *
-//  * @param {number[]} pt1 - The first point.
-//  * @param {number[]} pt2 - The second point.
-//  * @param {number} pct - The interpolation percentage (between 0 and 1).
-//  * @returns {number[]} The interpolated point.
-//  */
-// export function lerpPt(pt1, pt2, pct) {
-//     return [pt1[0] + (pt2[0] - pt1[0]) * pct, pt1[1] + (pt2[1] - pt1[1]) * pct]
-// }
-
-// /**
-//  * Calculates the midpoint between two points.
-//  *
-//  * @param {number[]} pt1 - The first point, represented as an array of two numbers.
-//  * @param {number[]} pt2 - The second point, represented as an array of two numbers.
-//  * @returns {number[]} The midpoint between pt1 and pt2, represented as an array of two numbers.
-//  */
-// export function midPt(pt1, pt2) {
-//     return [(pt1[0] + pt2[0]) / 2, (pt1[1] + pt2[1]) / 2]
-// }
-
-// /**
-//  * Clamps a value between a minimum and maximum.
-//  *
-//  * @param {number} value - The value to be clamped.
-//  * @param {number} min - The minimum value.
-//  * @param {number} max - The maximum value.
-//  * @returns {number} The clamped value.
-//  */
-// export function clamp(value, min = 0, max = 1) {
-//     return Math.min(Math.max(value, min), max)
-// }
+/**
+ * Maps a set of points from the range [0, 1] to a rectangle defined by its position and maximum coordinates.
+ * Optionally, clips the points to stay within the rectangle.
+ *
+ * @param pts - An array of points to be mapped.
+ * @param rect - The rectangle to map the points to.
+ * @param clip - Optional. If true, points outside the rectangle will be dropped. Default is false.
+ * @returns An array of mapped points, filtered to remove any dropped points if clipping is enabled.
+ */
+export function map01toRect(pts: Vec2[], rect: Rectangle, clip = false) {
+    const [x0, y0] = rect.pos
+    const [x1, y1] = rect.max
+    return pts
+        .map(([x, y]) => {
+            const remappedX = mapRange(x, 0, 1, x0, x1)
+            const remappedY = mapRange(y, 0, 1, y0, y1)
+            if (clip) {
+                if (remappedX < x0 || remappedX > x1 || remappedY < y0 || remappedY > y1) {
+                    return null // Drop the item
+                } else {
+                    return [remappedX, remappedY]
+                }
+            } else {
+                return [remappedX, remappedY] // Just pass the value
+            }
+        })
+        .filter((item) => item !== null) // Filter out dropped items
+}

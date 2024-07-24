@@ -39,19 +39,19 @@
     </head>
     <body>
         <canvas id="mainCanvas"></canvas>
-        <script type="module" src="/main.js"></script>
         <script type="module">
             import { createCanvas } from 'root/canvas'
             import { randomPalette } from './palettes'
 
-            import { convexHullDemo } from './sketches/convex_hull'
+            // import { floodFill } from './sketches/flood_fill'
+            import { easingsDistros } from './sketches/easings_distros'
 
             const mainCanvas = document.getElementById('mainCanvas')
             const cmd = createCanvas(1200, 1200, mainCanvas, [-1, 1])
 
             const palette = randomPalette()
 
-            convexHullDemo(cmd, palette)
+            easingsDistros(cmd, palette)
         </script>
     </body>
 </html>

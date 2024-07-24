@@ -9,6 +9,7 @@ interface CanvasCommands {
     ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D;
     canvas: HTMLCanvasElement | OffscreenCanvas;
     range: CanvasRangeInfo | undefined;
+    toPixelSpace: (pt: [number, number]) => [number, number];
     setRange: (range: [number, number]) => CanvasRangeInfo;
     clear: (clearColor: string) => void;
     draw: (geo: GeoData, attribs: Attribs) => void;

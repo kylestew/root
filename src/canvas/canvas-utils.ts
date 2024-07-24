@@ -12,6 +12,7 @@ interface CanvasCommands {
     ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D
     canvas: HTMLCanvasElement | OffscreenCanvas
     range: CanvasRangeInfo | undefined
+    toPixelSpace: (pt: [number, number]) => [number, number]
     setRange: (range: [number, number]) => CanvasRangeInfo
     clear: (clearColor: string) => void
     draw: (geo: GeoData, attribs: Attribs) => void
@@ -61,6 +62,7 @@ export function createCanvas(
         ctx,
         canvas,
         range: rangeInfo,
+        toPixelSpace: (pt: [number, number]) => toPixelSpace(ctx, pt),
         setRange: (range: [number, number]) => setCanvasRange(ctx, range),
         clear: (clearColor: string) => clear(ctx, clearColor),
         draw: (geo: GeoData, attribs: Attribs) => draw(ctx, geo, attribs),
@@ -96,6 +98,7 @@ export function createOffscreenCanvas(
         ctx,
         canvas,
         range: rangeInfo,
+        toPixelSpace: (pt: [number, number]) => toPixelSpace(ctx, pt),
         setRange: (range: [number, number]) => setCanvasRange(ctx, range),
         clear: (clearColor: string) => clear(ctx, clearColor),
         draw: (geo: GeoData, attribs: Attribs) => draw(ctx, geo, attribs),
@@ -165,4 +168,23 @@ function setCanvasRange(
         yRange,
         rect,
     }
+}
+
+function toPixelSpace(
+    ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
+    pt: [number, number]
+): [number, number] {
+    const [x, y] = pt
+
+    // Get the current transformation matrix
+    const transform = ctx.getTransform()
+
+    // Create a point object with the input coordinates
+    const point = new DOMPoint(x, y)
+
+    // Apply the inverse transformation to the point
+    const transformedPoint = transform.transformPoint(point)
+
+    // Return the original canvas coordinates
+    return [transformedPoint.x, transformedPoint.y]
 }

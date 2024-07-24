@@ -38,6 +38,10 @@
         "./mark": {
             "types": "./dist/mark/index.d.ts",
             "default": "./dist/mark/index.js"
+        },
+        "./tex": {
+            "types": "./dist/tex/index.d.ts",
+            "default": "./dist/tex/index.js"
         }
     },
     "type": "module",

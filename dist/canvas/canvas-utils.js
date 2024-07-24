@@ -36,6 +36,7 @@ export function createCanvas(width, height, existingCanvas = undefined, range = 
         ctx,
         canvas,
         range: rangeInfo,
+        toPixelSpace: (pt) => toPixelSpace(ctx, pt),
         setRange: (range) => setCanvasRange(ctx, range),
         clear: (clearColor) => clear(ctx, clearColor),
         draw: (geo, attribs) => draw(ctx, geo, attribs),
@@ -64,6 +65,7 @@ export function createOffscreenCanvas(width, height, range = undefined) {
         ctx,
         canvas,
         range: rangeInfo,
+        toPixelSpace: (pt) => toPixelSpace(ctx, pt),
         setRange: (range) => setCanvasRange(ctx, range),
         clear: (clearColor) => clear(ctx, clearColor),
         draw: (geo, attribs) => draw(ctx, geo, attribs),
@@ -122,4 +124,15 @@ function setCanvasRange(ctx, range) {
         yRange,
         rect,
     };
+}
+function toPixelSpace(ctx, pt) {
+    const [x, y] = pt;
+    // Get the current transformation matrix
+    const transform = ctx.getTransform();
+    // Create a point object with the input coordinates
+    const point = new DOMPoint(x, y);
+    // Apply the inverse transformation to the point
+    const transformedPoint = transform.transformPoint(point);
+    // Return the original canvas coordinates
+    return [transformedPoint.x, transformedPoint.y];
 }
