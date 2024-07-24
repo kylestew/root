@@ -8,7 +8,7 @@ import { chaikinCurve } from '../tools/algos/chaikin'
 import { simplex3 } from '../tools/random/noise'
 import { draw } from '../tools/draw'
 
-export function woodBlocks(ctx, palette) {
+function woodBlocks(cmd, palette) {
     const { background, primary, secondary, accent, dark, neutral } = palette
 
     function createWoodBlock(zOffset) {
@@ -94,3 +94,5 @@ export function woodBlocks(ctx, palette) {
     //         draw(ctx, new Line(pt, infinityPt()), { stroke: primary + '99', weight: 0.004 })
     //     })
 }
+woodBlocks.title = 'Wood Blocks'
+export { woodBlocks }
