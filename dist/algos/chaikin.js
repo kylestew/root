@@ -43,3 +43,4 @@ function chaikinSubdivide(points, closed) {
     }
     return result;
 }
+//# sourceMappingURL=chaikin.js.map

@@ -37,3 +37,4 @@ export function asPoints(geo, num) {
     }
     throw new Error(`Method not implemented on ${geo.constructor.name}`);
 }
+//# sourceMappingURL=asPoints.js.map

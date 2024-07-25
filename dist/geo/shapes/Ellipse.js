@@ -1,4 +1,7 @@
 export class Ellipse {
+    pos;
+    r;
+    attribs;
     /**
      * Creates an Ellipse object
      *
@@ -12,3 +15,4 @@ export class Ellipse {
         this.attribs = attribs;
     }
 }
+//# sourceMappingURL=Ellipse.js.map

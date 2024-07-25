@@ -1,4 +1,4 @@
-import { Arc, Circle, Ellipse, Line, Polygon, Polyline, Rectangle } from '../geo/index';
+import { Arc, Circle, Ellipse, Line, Polygon, Polyline, Rectangle, Quadratic } from '../geo/index';
 import { asPath } from '../geo/index';
 function isPt(obj) {
     return typeof obj.x === 'number' && typeof obj.y === 'number';
@@ -58,7 +58,8 @@ export function draw(ctx, geo, attribs = {}) {
         geo instanceof Line ||
         geo instanceof Polygon ||
         geo instanceof Polyline ||
-        geo instanceof Rectangle)) {
+        geo instanceof Rectangle ||
+        geo instanceof Quadratic)) {
         ctx.restore();
         return;
     }
@@ -112,3 +113,4 @@ export function clear(ctx, clearColor) {
     // Restore the previous transformation matrix
     ctx.restore();
 }
+//# sourceMappingURL=draw.js.map

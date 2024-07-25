@@ -44,3 +44,4 @@ export function closestPoint(shape, pt) {
     }
     throw new Error(`Method not implemented on ${shape.constructor.name}`);
 }
+//# sourceMappingURL=closestPoint.js.map

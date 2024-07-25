@@ -33,3 +33,4 @@ export function center(shape, p) {
     }
     throw new Error(`Method not implemented on ${shape.constructor.name}`);
 }
+//# sourceMappingURL=center.js.map

@@ -16,7 +16,7 @@ function pointOnSphere(r, theta, phi) {
     ]
 }
 
-export function phongLightingExample(ctx, palette) {
+function phongLightingExample(ctx, palette) {
     const [bg, primary, secondary] = palette
 
     function render(timestamp) {
@@ -90,3 +90,5 @@ export function phongLightingExample(ctx, palette) {
     }
     animate(10, render)
 }
+phongLightingExample.name = 'Phong Lighting'
+export { phongLightingExample }

@@ -1,4 +1,6 @@
 export class Polyline {
+    pts;
+    attribs;
     /**
      * Construct a Polyline object
      *
@@ -11,3 +13,4 @@ export class Polyline {
         this.attribs = attribs;
     }
 }
+//# sourceMappingURL=Polyline.js.map

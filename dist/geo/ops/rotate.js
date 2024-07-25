@@ -52,3 +52,4 @@ export function rotate(shape, theta) {
     }
     throw new Error(`Method not implemented on ${shape.constructor.name}`);
 }
+//# sourceMappingURL=rotate.js.map

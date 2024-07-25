@@ -1,4 +1,10 @@
 export class Arc {
+    pos;
+    r;
+    start;
+    end;
+    clockwise;
+    attribs;
     /**
      * Creates an Arc object
      *
@@ -37,3 +43,4 @@ export class Arc {
         return this.r * deltaAngle;
     }
 }
+//# sourceMappingURL=Arc.js.map

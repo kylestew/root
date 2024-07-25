@@ -84,3 +84,4 @@ export function asPath(shape) {
     }
     return path;
 }
+//# sourceMappingURL=asPath.js.map

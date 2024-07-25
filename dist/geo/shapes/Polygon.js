@@ -1,4 +1,6 @@
 export class Polygon {
+    pts;
+    attribs;
     /**
      * Construct a Polygon object
      *
@@ -11,3 +13,4 @@ export class Polygon {
         this.attribs = attribs;
     }
 }
+//# sourceMappingURL=Polygon.js.map

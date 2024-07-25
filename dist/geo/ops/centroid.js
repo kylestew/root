@@ -40,3 +40,4 @@ export function centroid(shape) {
     }
     throw new Error(`Method not implemented on ${shape.constructor.name}`);
 }
+//# sourceMappingURL=centroid.js.map

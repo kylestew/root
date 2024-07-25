@@ -3,6 +3,8 @@ import { Arc, Circle, Ellipse, Line, Polygon, Polyline, Rectangle, Quadratic } f
 
 import { normalize, sub } from '../../math/index'
 
+import { Bezier } from 'bezier-js'
+
 /**
  * Computes tangent on shape/boundary at normalized parametric position `t`.
  *
@@ -20,10 +22,10 @@ export function tangentAt(shape: Shape, t: number) {
     } else if (shape instanceof Polygon) {
     } else if (shape instanceof Polyline) {
     } else if (shape instanceof Quadratic) {
-        // const [start, ctrl, end] = shape.pts
-        // const bezier = new Bezier(start[0], start[1], ctrl[0], ctrl[1], end[0], end[1])
-        // const deriv = bezier.derivative(t)
-        // return [deriv.x, deriv.y]
+        const [start, ctrl, end] = shape.pts
+        const bezier = new Bezier(start[0], start[1], ctrl[0], ctrl[1], end[0], end[1])
+        const deriv = bezier.derivative(t)
+        return [deriv.x, deriv.y]
     } else if (shape instanceof Rectangle) {
     }
     throw new Error(`Method not implemented on ${shape.constructor.name}`)

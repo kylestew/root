@@ -1,5 +1,5 @@
 import { GeoData, Vec2, Pt, Attribs } from '../geo/types'
-import { Arc, Circle, Ellipse, Line, Polygon, Polyline, Rectangle } from '../geo/index'
+import { Arc, Circle, Ellipse, Line, Polygon, Polyline, Rectangle, Quadratic } from '../geo/index'
 import { asPath } from '../geo/index'
 
 function isPt(obj: any): obj is Pt {
@@ -71,7 +71,8 @@ export function draw(
             geo instanceof Line ||
             geo instanceof Polygon ||
             geo instanceof Polyline ||
-            geo instanceof Rectangle
+            geo instanceof Rectangle ||
+            geo instanceof Quadratic
         )
     ) {
         ctx.restore()

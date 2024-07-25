@@ -158,3 +158,4 @@ export function pareto(xm, alpha) {
     const uniformRandom = Math.random(); // Generates a uniform random number between 0 and 1
     return xm / Math.pow(uniformRandom, 1 / alpha);
 }
+//# sourceMappingURL=random.js.map

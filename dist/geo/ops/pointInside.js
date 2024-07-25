@@ -47,3 +47,4 @@ export function pointInside(shape, pt) {
     }
     throw new Error(`Method not implemented on ${shape.constructor.name}`);
 }
+//# sourceMappingURL=pointInside.js.map

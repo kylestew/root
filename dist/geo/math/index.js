@@ -106,3 +106,4 @@ export function lineLineIntersection(line1, line2) {
     // No valid intersection
     return null;
 }
+//# sourceMappingURL=index.js.map

@@ -29,3 +29,4 @@ export { splitAt } from './ops/splitAt';
 export { tangentAt } from './ops/tangentAt';
 export { translate } from './ops/translate';
 export { withAttribs } from './ops/withAttribs';
+//# sourceMappingURL=index.js.map

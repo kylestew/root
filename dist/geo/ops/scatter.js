@@ -26,3 +26,4 @@ export function scatter(shape, num) {
     }
     return out;
 }
+//# sourceMappingURL=scatter.js.map

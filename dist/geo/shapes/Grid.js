@@ -1,5 +1,9 @@
 import { Rectangle } from './Rectangle.js';
 export class Grid {
+    pos;
+    size;
+    rows;
+    cols;
     constructor(pos, size, rows, cols) {
         this.pos = pos;
         this.size = size;
@@ -65,3 +69,4 @@ export class Grid {
         return new Rectangle([x, y], [cellWidth, cellHeight]);
     }
 }
+//# sourceMappingURL=Grid.js.map

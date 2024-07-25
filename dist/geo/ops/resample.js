@@ -47,3 +47,4 @@ export function resample(shape, num) {
     }
     throw new Error(`Method not implemented on ${shape.constructor.name}`);
 }
+//# sourceMappingURL=resample.js.map

@@ -99,3 +99,4 @@ export function map01toRect(pts, rect, clip = false) {
     })
         .filter((item) => item !== null); // Filter out dropped items
 }
+//# sourceMappingURL=math.js.map

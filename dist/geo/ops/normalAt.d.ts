@@ -6,4 +6,4 @@ import { Shape } from '../types';
  * @returns {number[]} The normal vector at the given point on the shape.
  * @throws {Error} If the method is not implemented for the given shape.
  */
-export declare function normalAt(shape: Shape, t: number): void;
+export declare function normalAt(shape: Shape, t: number): number[];

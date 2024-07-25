@@ -7,3 +7,4 @@ export { addN, subN, mulN, divN } from './vectors';
 export { neg, dist, mag } from './vectors';
 // EASINGS
 export * from './easings';
+//# sourceMappingURL=index.js.map

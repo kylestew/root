@@ -197,3 +197,4 @@ export function color(value) {
         },
     };
 }
+//# sourceMappingURL=index.js.map

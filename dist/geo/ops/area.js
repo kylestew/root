@@ -36,3 +36,4 @@ export function area(shape) {
     }
     throw new Error(`Method not implemented on ${shape.constructor.name}`);
 }
+//# sourceMappingURL=area.js.map

@@ -39,3 +39,4 @@ export function translate(shape, offset) {
     }
     throw new Error(`Method not implemented on ${shape.constructor.name}`);
 }
+//# sourceMappingURL=translate.js.map

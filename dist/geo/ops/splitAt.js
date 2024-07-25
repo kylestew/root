@@ -26,3 +26,4 @@ export function splitAt(shape, t) {
     }
     throw new Error(`Method not implemented on ${shape.constructor.name}`);
 }
+//# sourceMappingURL=splitAt.js.map

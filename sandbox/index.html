@@ -44,14 +44,14 @@
             import { randomPalette } from './palettes'
 
             // import { floodFill } from './sketches/flood_fill'
-            import { curveDemos } from './sketches/curve_demos'
+            import { phongLightingExample } from './sketches/phong'
 
             const mainCanvas = document.getElementById('mainCanvas')
             const cmd = createCanvas(1200, 1200, mainCanvas, [-1, 1])
 
             const palette = randomPalette()
 
-            curveDemos(cmd, palette)
+            phongLightingExample(cmd, palette)
         </script>
     </body>
 </html>

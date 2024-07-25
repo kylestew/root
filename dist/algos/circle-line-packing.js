@@ -1,5 +1,7 @@
 import { Circle, Line, intersects } from '../geo/index';
 export class CircleLinePacking {
+    obstacles;
+    packed;
     constructor(obstacles = []) {
         this.obstacles = obstacles;
         this.packed = [];
@@ -31,3 +33,4 @@ export class CircleLinePacking {
         return undefined;
     }
 }
+//# sourceMappingURL=circle-line-packing.js.map

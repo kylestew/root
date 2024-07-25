@@ -1,4 +1,7 @@
 export class Rectangle {
+    pos;
+    size;
+    attribs;
     /**
      * Rectangle shape constructor.
      *
@@ -67,3 +70,4 @@ export class Rectangle {
         return [this.pos[0] + this.size[0], this.pos[1] + this.size[1]];
     }
 }
+//# sourceMappingURL=Rectangle.js.map

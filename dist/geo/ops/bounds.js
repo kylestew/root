@@ -55,3 +55,4 @@ export function bounds(shape) {
     }
     throw new Error(`Method not implemented on ${shape.constructor.name}`);
 }
+//# sourceMappingURL=bounds.js.map

@@ -21,3 +21,4 @@ export function asPolygon(shape, num) {
     }
     return new Polygon(pts, shape.attribs);
 }
+//# sourceMappingURL=asPolygon.js.map

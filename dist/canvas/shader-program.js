@@ -28,3 +28,4 @@ export function createShaderProgram(gl, vertexShader, fragmentShader) {
     }
     return shaderProgram;
 }
+//# sourceMappingURL=shader-program.js.map

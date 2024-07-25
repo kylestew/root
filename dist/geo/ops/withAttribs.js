@@ -20,3 +20,4 @@ export function withAttribs(shape, attribs) {
     }
     throw new Error(`Method not implemented on ${shape.constructor.name}`);
 }
+//# sourceMappingURL=withAttribs.js.map

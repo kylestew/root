@@ -64,3 +64,4 @@ export function dotGrid(shape, sideCount = 10, radMult = 0.5, color = 'black') {
 // goto 10
 // noise lines - perline noise wave field
 // topo lines - same as above
+//# sourceMappingURL=pattern_fills.js.map

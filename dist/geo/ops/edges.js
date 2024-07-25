@@ -25,3 +25,4 @@ export function edges(shape) {
     }
     throw new Error(`Method not implemented on ${shape.constructor.name}`);
 }
+//# sourceMappingURL=edges.js.map

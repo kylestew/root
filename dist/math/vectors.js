@@ -49,3 +49,4 @@ export const mag = (v) => Math.hypot(...v);
 //     const dotIN = dot(I_norm, N_norm)
 //     return [I_norm[0] - 2 * dotIN * N_norm[0], I_norm[1] - 2 * dotIN * N_norm[1], I_norm[2] - 2 * dotIN * N_norm[2]]
 // }
+//# sourceMappingURL=vectors.js.map

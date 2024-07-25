@@ -12,3 +12,4 @@ export function gaussian1D(count, center, stdDev) {
 export function gaussian2D(count, center, stdDev) {
     return full(count, () => [gaussian(center[0], stdDev[0]), gaussian(center[1], stdDev[1])]);
 }
+//# sourceMappingURL=distros.js.map

@@ -8,6 +8,9 @@
 // This code was placed in the public domain by its original author,
 // Stefan Gustavson. You may use it as you see fit, but attribution is appreciated.
 class Grad {
+    x;
+    y;
+    z;
     constructor(x, y, z) {
         this.x = x;
         this.y = y;
@@ -284,3 +287,4 @@ function perlin3(x, y, z) {
     return lerp(lerp(lerp(n000, n100, u), lerp(n001, n101, u), w), lerp(lerp(n010, n110, u), lerp(n011, n111, u), w), v);
 }
 export { seed, simplex2, simplex3, perlin2, perlin3 };
+//# sourceMappingURL=noise.js.map

@@ -136,3 +136,4 @@ function toPixelSpace(ctx, pt) {
     // Return the original canvas coordinates
     return [transformedPoint.x, transformedPoint.y];
 }
+//# sourceMappingURL=canvas-utils.js.map

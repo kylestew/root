@@ -23,3 +23,4 @@ export function sand(shape, grainCount, fuzziness, distributionFn = () => random
     }
     return full(grainCount, () => pointAt(fuzzyShape(), distributionFn()));
 }
+//# sourceMappingURL=sand.js.map

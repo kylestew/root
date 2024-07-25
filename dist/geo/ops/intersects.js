@@ -25,3 +25,4 @@ export function intersects(a, b) {
     }
     throw new Error(`Method not implemented for shapes: ${a.constructor.name} and ${b.constructor.name}`);
 }
+//# sourceMappingURL=intersects.js.map

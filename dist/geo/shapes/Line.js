@@ -1,4 +1,6 @@
 export class Line {
+    pts;
+    attribs;
     /**
      * Represents a line segment in a geometric space.
      *
@@ -67,3 +69,4 @@ export class Line {
         return Math.atan2(endY - startY, endX - startX);
     }
 }
+//# sourceMappingURL=Line.js.map

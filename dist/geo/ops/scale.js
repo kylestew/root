@@ -77,3 +77,4 @@ export function scale(shape, factor) {
     }
     throw new Error(`Method not implemented on ${shape.constructor.name}`);
 }
+//# sourceMappingURL=scale.js.map

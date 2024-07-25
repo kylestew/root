@@ -26,3 +26,4 @@ export function offset(shape, dist) {
     }
     throw new Error(`Method not implemented on ${shape.constructor.name}`);
 }
+//# sourceMappingURL=offset.js.map

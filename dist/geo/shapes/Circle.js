@@ -1,4 +1,7 @@
 export class Circle {
+    pos;
+    r;
+    attribs;
     /**
      * Creates a Circle object
      *
@@ -12,3 +15,4 @@ export class Circle {
         this.attribs = attribs;
     }
 }
+//# sourceMappingURL=Circle.js.map
