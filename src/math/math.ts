@@ -55,31 +55,31 @@ export function mapRange(value: number, low1: number, high1: number, low2: numbe
     return ratio * (high2 - low2) + low2
 }
 
-// /**
-//  * Maps a point [x, y] from one range to another range.
-//  *
-//  * @param {Array<number>} point - The point [x, y] to be mapped.
-//  * @param {Array<number>} inputRangeX - The lower and upper bounds of the input range for x.
-//  * @param {Array<number>} inputRangeY - The lower and upper bounds of the input range for y.
-//  * @param {Array<number>} outputRangeX - The lower and upper bounds of the output range for x.
-//  * @param {Array<number>} outputRangeY - The lower and upper bounds of the output range for y.
-//  * @returns {Array<number>} The mapped point [x, y].
-//  */
-// export function mapRange2D(point, inputRangeX, inputRangeY, outputRangeX, outputRangeY) {
-//     const [x, y] = point
-//     const [low1X, high1X] = inputRangeX
-//     const [low1Y, high1Y] = inputRangeY
-//     const [low2X, high2X] = outputRangeX
-//     const [low2Y, high2Y] = outputRangeY
+/**
+ * Maps a point [x, y] from one range to another range.
+ *
+ * @param {Array<number>} point - The point [x, y] to be mapped.
+ * @param {Array<number>} inputRangeX - The lower and upper bounds of the input range for x.
+ * @param {Array<number>} inputRangeY - The lower and upper bounds of the input range for y.
+ * @param {Array<number>} outputRangeX - The lower and upper bounds of the output range for x.
+ * @param {Array<number>} outputRangeY - The lower and upper bounds of the output range for y.
+ * @returns {Array<number>} The mapped point [x, y].
+ */
+export function mapRange2D(point: Vec2, inputRangeX: Vec2, inputRangeY: Vec2, outputRangeX: Vec2, outputRangeY: Vec2) {
+    const [x, y] = point
+    const [low1X, high1X] = inputRangeX
+    const [low1Y, high1Y] = inputRangeY
+    const [low2X, high2X] = outputRangeX
+    const [low2Y, high2Y] = outputRangeY
 
-//     const ratioX = (x - low1X) / (high1X - low1X)
-//     const ratioY = (y - low1Y) / (high1Y - low1Y)
+    const ratioX = (x - low1X) / (high1X - low1X)
+    const ratioY = (y - low1Y) / (high1Y - low1Y)
 
-//     const mappedX = ratioX * (high2X - low2X) + low2X
-//     const mappedY = ratioY * (high2Y - low2Y) + low2Y
+    const mappedX = ratioX * (high2X - low2X) + low2X
+    const mappedY = ratioY * (high2Y - low2Y) + low2Y
 
-//     return [mappedX, mappedY]
-// }
+    return [mappedX, mappedY]
+}
 
 /**
  * Maps a set of points from the range [0, 1] to a rectangle defined by its position and maximum coordinates.

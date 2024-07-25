@@ -37,6 +37,17 @@ export declare function midPt(pt1: Vec2, pt2: Vec2): number[];
  */
 export declare function mapRange(value: number, low1: number, high1: number, low2: number, high2: number): number;
 /**
+ * Maps a point [x, y] from one range to another range.
+ *
+ * @param {Array<number>} point - The point [x, y] to be mapped.
+ * @param {Array<number>} inputRangeX - The lower and upper bounds of the input range for x.
+ * @param {Array<number>} inputRangeY - The lower and upper bounds of the input range for y.
+ * @param {Array<number>} outputRangeX - The lower and upper bounds of the output range for x.
+ * @param {Array<number>} outputRangeY - The lower and upper bounds of the output range for y.
+ * @returns {Array<number>} The mapped point [x, y].
+ */
+export declare function mapRange2D(point: Vec2, inputRangeX: Vec2, inputRangeY: Vec2, outputRangeX: Vec2, outputRangeY: Vec2): number[];
+/**
  * Maps a set of points from the range [0, 1] to a rectangle defined by its position and maximum coordinates.
  * Optionally, clips the points to stay within the rectangle.
  *
