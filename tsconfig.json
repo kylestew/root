@@ -5,7 +5,7 @@
         "skipLibCheck": true,
         "target": "es2022",
         "allowJs": true,
-        "resolveJsonModule": true,
+        // "resolveJsonModule": true,
         "moduleDetection": "force",
         "isolatedModules": true,
         "verbatimModuleSyntax": false,
@@ -16,8 +16,8 @@
         "noImplicitOverride": true,
 
         /* Transpiling with TypeScript: */
-        "module": "ES2020",
-        "moduleResolution": "Bundler",
+        "module": "ES6",
+        // "moduleResolution": "NodeNext",
         "outDir": "dist",
         "sourceMap": true,
 
