@@ -1,4 +1,4 @@
-import { Arc, Circle, Ellipse, Line, Polygon, Polyline, Rectangle, Quadratic } from '../index';
+import { Quadratic } from '../index';
 import { Bezier } from 'bezier-js';
 /**
  * Calculates the normal vector at a given point on a shape.
@@ -8,25 +8,11 @@ import { Bezier } from 'bezier-js';
  * @throws {Error} If the method is not implemented for the given shape.
  */
 export function normalAt(shape, t) {
-    if (shape instanceof Arc) {
-    }
-    else if (shape instanceof Circle) {
-    }
-    else if (shape instanceof Ellipse) {
-    }
-    else if (shape instanceof Line) {
-    }
-    else if (shape instanceof Polygon) {
-    }
-    else if (shape instanceof Polyline) {
-    }
-    else if (shape instanceof Quadratic) {
+    if (shape instanceof Quadratic) {
         const [start, ctrl, end] = shape.pts;
         const bezier = new Bezier(start[0], start[1], ctrl[0], ctrl[1], end[0], end[1]);
         const norm = bezier.normal(t);
         return [norm.x, norm.y];
-    }
-    else if (shape instanceof Rectangle) {
     }
     throw new Error(`Method not implemented on ${shape.constructor.name}`);
 }
