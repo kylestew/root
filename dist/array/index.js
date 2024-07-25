@@ -12,6 +12,8 @@
  * zip(arr1, arr2) - Zips two arrays together, creating an array of pairs.
  * rotate(array, positions) - Rotates an array by a given number of positions.
  * takeEvery(array, n) - Takes every nth element from an array and returns a new array.
+ * takePieces(array: any[], size: number) - Splits an array into smaller arrays of size N.
+ * randomRemove(array: any[], percentToRemove: number) - Removes a random number of elements from an array.
  */
 /**
  * Prefills a new array with values returned by a callback function or a provided value.
@@ -171,30 +173,24 @@ export function range(from, to, step = 1) {
  * @param step -
  * @param partial -
  */
-// export function partition(data, size, step, partial) {
-//     if (step === void 0) {
-//         step = 1
-//     }
-//     if (partial === void 0) {
-//         partial = false
-//     }
-//     var res = []
-//     var n = data.length
-//     if (size <= 0 || step <= 0) {
-//         return res
-//     }
-//     if (size > n) {
-//         return partial ? [data] : []
-//     }
-//     var max = n - size
-//     for (var i = 0; i <= max; i += step) {
-//         res.push(data.slice(i, i + size))
-//     }
-//     if (partial && max % step !== 0) {
-//         res.push(data.slice(max))
-//     }
-//     return res
-// }
+export function partition(data, size, step = 0, partial = false) {
+    var res = [];
+    var n = data.length;
+    if (size <= 0 || step <= 0) {
+        return res;
+    }
+    if (size > n) {
+        return partial ? [data] : [];
+    }
+    var max = n - size;
+    for (var i = 0; i <= max; i += step) {
+        res.push(data.slice(i, i + size));
+    }
+    if (partial && max % step !== 0) {
+        res.push(data.slice(max));
+    }
+    return res;
+}
 /**
  * Wraps elements from the start and end of an array to the other side.
  * @param {Array} src - The source array.
@@ -202,27 +198,27 @@ export function range(from, to, step = 1) {
  * @param {number} numRight - Number of elements to wrap from the left end to the end.
  * @returns {Array} - The new array with wrapped elements.
  */
-// export function wrapSides(src, numLeft = 1, numRight = 0) {
-//     if (!Array.isArray(src)) {
-//         throw new Error('src must be an array')
-//     }
-//     const len = src.length
-//     if (numLeft < 0 || numRight < 0 || numLeft > len || numRight > len) {
-//         throw new Error(`allowed wrap range: [0..${len}]`)
-//     }
-//     const result = []
-//     // Add elements from the end to the start
-//     for (let i = len - numLeft; i < len; i++) {
-//         result.push(src[i])
-//     }
-//     // Add the original elements
-//     result.push(...src)
-//     // Add elements from the start to the end
-//     for (let i = 0; i < numRight; i++) {
-//         result.push(src[i])
-//     }
-//     return result
-// }
+export function wrapSides(src, numLeft = 1, numRight = 0) {
+    if (!Array.isArray(src)) {
+        throw new Error('src must be an array');
+    }
+    const len = src.length;
+    if (numLeft < 0 || numRight < 0 || numLeft > len || numRight > len) {
+        throw new Error(`allowed wrap range: [0..${len}]`);
+    }
+    const result = [];
+    // Add elements from the end to the start
+    for (let i = len - numLeft; i < len; i++) {
+        result.push(src[i]);
+    }
+    // Add the original elements
+    result.push(...src);
+    // Add elements from the start to the end
+    for (let i = 0; i < numRight; i++) {
+        result.push(src[i]);
+    }
+    return result;
+}
 /**
  * Returns a copied array with its elements shuffled.
  *
@@ -310,16 +306,16 @@ export function takeEvery(array, n) {
  * Splits an array into smaller arrays of size N.
  *
  * @param {Array} array - The array to be split.
- * @param {number} n - The size of each smaller array.
+ * @param {number} size - The size of each smaller array.
  * @returns {Array} - An array of smaller arrays.
  */
-// export function splitArray(array, n) {
-//     const result = []
-//     for (let i = 0; i < array.length; i += n) {
-//         result.push(array.slice(i, i + n))
-//     }
-//     return result
-// }
+export function takePieces(array, size) {
+    const result = [];
+    for (let i = 0; i < array.length; i += size) {
+        result.push(array.slice(i, i + size));
+    }
+    return result;
+}
 /**
  * Removes a percentage of elements from an array.
  *

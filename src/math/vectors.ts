@@ -22,18 +22,18 @@ export const add = (v1: number[], v2: number[]) => v1.map((x, i) => x + v2[i])
 export const sub = (v1: number[], v2: number[]) => v1.map((val, i) => val - v2[i])
 export const mul = (v1: number[], v2: number[]) => v1.map((x, i) => x * v2[i])
 export const div = (v1: number[], v2: number[]) => v1.map((x, i) => x / v2[i])
-// export const dot = (v1, v2) => v1.reduce((acc, val, i) => acc + val * v2[i], 0)
 
 export const addN = (v: number[], n: number) => v.map((x) => x + n)
 export const subN = (v: number[], n: number) => v.map((x) => x - n)
 export const mulN = (v: number[], n: number) => v.map((x) => x * n)
 export const divN = (v: number[], n: number) => v.map((x) => x / n)
-// export const neg = (v) => mulN(v, -1)
 
+// export const dot = (v1, v2) => v1.reduce((acc, val, i) => acc + val * v2[i], 0)
 // export const floor = (v) => v.map(Math.floor)
 // export const ceil = (v) => v.map(Math.ceil)
 // export const clamp01 = (v) => v.map((x) => Math.min(1, Math.max(0, x)))
 
+export const neg = (v: number[]) => mulN(v, -1)
 export const dist = (v1: number[], v2: number[]) => Math.hypot(...sub(v1, v2))
 export const mag = (v: number[]) => Math.hypot(...v)
 

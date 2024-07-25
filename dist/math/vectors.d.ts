@@ -7,5 +7,6 @@ export declare const addN: (v: number[], n: number) => number[];
 export declare const subN: (v: number[], n: number) => number[];
 export declare const mulN: (v: number[], n: number) => number[];
 export declare const divN: (v: number[], n: number) => number[];
+export declare const neg: (v: number[]) => number[];
 export declare const dist: (v1: number[], v2: number[]) => number;
 export declare const mag: (v: number[]) => number;

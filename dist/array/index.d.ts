@@ -12,6 +12,8 @@
  * zip(arr1, arr2) - Zips two arrays together, creating an array of pairs.
  * rotate(array, positions) - Rotates an array by a given number of positions.
  * takeEvery(array, n) - Takes every nth element from an array and returns a new array.
+ * takePieces(array: any[], size: number) - Splits an array into smaller arrays of size N.
+ * randomRemove(array: any[], percentToRemove: number) - Removes a random number of elements from an array.
  */
 /**
  * Prefills a new array with values returned by a callback function or a provided value.
@@ -71,6 +73,7 @@ export declare function range(from: number, to: number, step?: number): number[]
  * @param step -
  * @param partial -
  */
+export declare function partition(data: any[], size: number, step?: number, partial?: boolean): any[];
 /**
  * Wraps elements from the start and end of an array to the other side.
  * @param {Array} src - The source array.
@@ -78,6 +81,7 @@ export declare function range(from: number, to: number, step?: number): number[]
  * @param {number} numRight - Number of elements to wrap from the left end to the end.
  * @returns {Array} - The new array with wrapped elements.
  */
+export declare function wrapSides(src: any[], numLeft?: number, numRight?: number): any[];
 /**
  * Returns a copied array with its elements shuffled.
  *
@@ -120,9 +124,10 @@ export declare function takeEvery(array: any[], n: number): any[];
  * Splits an array into smaller arrays of size N.
  *
  * @param {Array} array - The array to be split.
- * @param {number} n - The size of each smaller array.
+ * @param {number} size - The size of each smaller array.
  * @returns {Array} - An array of smaller arrays.
  */
+export declare function takePieces(array: any[], size: number): any[][];
 /**
  * Removes a percentage of elements from an array.
  *

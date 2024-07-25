@@ -12,7 +12,7 @@ export declare class Rectangle {
      * @param {Attribs} [attribs={}] - Optional attributes for the curve.
      */
     constructor(pos: number[], size: number[], attribs?: Attribs);
-    get pts(): number[][];
+    get pts(): Vec2[];
     /**
      * Creates a new `Rect` object from a center point and size.
      *

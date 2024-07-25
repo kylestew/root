@@ -20,15 +20,15 @@ export const add = (v1, v2) => v1.map((x, i) => x + v2[i]);
 export const sub = (v1, v2) => v1.map((val, i) => val - v2[i]);
 export const mul = (v1, v2) => v1.map((x, i) => x * v2[i]);
 export const div = (v1, v2) => v1.map((x, i) => x / v2[i]);
-// export const dot = (v1, v2) => v1.reduce((acc, val, i) => acc + val * v2[i], 0)
 export const addN = (v, n) => v.map((x) => x + n);
 export const subN = (v, n) => v.map((x) => x - n);
 export const mulN = (v, n) => v.map((x) => x * n);
 export const divN = (v, n) => v.map((x) => x / n);
-// export const neg = (v) => mulN(v, -1)
+// export const dot = (v1, v2) => v1.reduce((acc, val, i) => acc + val * v2[i], 0)
 // export const floor = (v) => v.map(Math.floor)
 // export const ceil = (v) => v.map(Math.ceil)
 // export const clamp01 = (v) => v.map((x) => Math.min(1, Math.max(0, x)))
+export const neg = (v) => mulN(v, -1);
 export const dist = (v1, v2) => Math.hypot(...sub(v1, v2));
 export const mag = (v) => Math.hypot(...v);
 // /**

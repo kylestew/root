@@ -26,7 +26,7 @@ export class Rectangle {
         this.attribs = attribs
     }
 
-    get pts() {
+    get pts(): Vec2[] {
         const [x0, y0] = this.pos
         const [x1, y1] = this.max
         return [
