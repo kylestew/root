@@ -8,7 +8,7 @@ import { Rectangle } from '../geo/index'
  * @param t - The interpolation factor, ranging from 0 to 1.
  * @returns The interpolated value between `a` and `b`.
  */
-export function lerp(a: number, b: number, t: number) {
+export function lerp(a: number, b: number, t: number): number {
     return a + (b - a) * t
 }
 
@@ -20,7 +20,7 @@ export function lerp(a: number, b: number, t: number) {
  * @param {number} pct - The interpolation percentage (between 0 and 1).
  * @returns {number[]} The interpolated point.
  */
-export function lerpPt(pt1: Vec2, pt2: Vec2, pct: number) {
+export function lerpPt(pt1: Vec2, pt2: Vec2, pct: number): [number, number] {
     return [pt1[0] + (pt2[0] - pt1[0]) * pct, pt1[1] + (pt2[1] - pt1[1]) * pct]
 }
 
