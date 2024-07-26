@@ -31,7 +31,7 @@ export function lerpPt(pt1: Vec2, pt2: Vec2, pct: number): [number, number] {
  * @param {number[]} pt2 - The second point, represented as an array of two numbers.
  * @returns {number[]} The midpoint between pt1 and pt2, represented as an array of two numbers.
  */
-export function midPt(pt1: Vec2, pt2: Vec2) {
+export function midPt(pt1: Vec2, pt2: Vec2): [number, number] {
     return [(pt1[0] + pt2[0]) / 2, (pt1[1] + pt2[1]) / 2]
 }
 

@@ -16,7 +16,7 @@ export declare function lerp(a: number, b: number, t: number): number;
  * @param {number} pct - The interpolation percentage (between 0 and 1).
  * @returns {number[]} The interpolated point.
  */
-export declare function lerpPt(pt1: Vec2, pt2: Vec2, pct: number): number[];
+export declare function lerpPt(pt1: Vec2, pt2: Vec2, pct: number): [number, number];
 /**
  * Calculates the midpoint between two points.
  *
@@ -24,7 +24,7 @@ export declare function lerpPt(pt1: Vec2, pt2: Vec2, pct: number): number[];
  * @param {number[]} pt2 - The second point, represented as an array of two numbers.
  * @returns {number[]} The midpoint between pt1 and pt2, represented as an array of two numbers.
  */
-export declare function midPt(pt1: Vec2, pt2: Vec2): number[];
+export declare function midPt(pt1: Vec2, pt2: Vec2): [number, number];
 /**
  * Maps a value from one range to another range.
  *
