@@ -54,5 +54,15 @@
 
             gridStudies(cmd, palette)
         </script>
+        <script type="module">
+            import { identity, matTranslate, matRotate, matScale } from 'root/math'
+
+            let mat = identity()
+            mat = matTranslate(mat, 10, 20)
+            mat = matRotate(mat, [0, 0], 0.3333)
+            mat = matScale(mat, [1, 1])
+
+            console.log(mat)
+        </script>
     </body>
 </html>

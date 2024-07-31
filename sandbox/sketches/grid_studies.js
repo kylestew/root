@@ -52,4 +52,18 @@ export function gridStudies(cmd, palette) {
         const cell = offset(rect, -0.004)
         cmd.draw(cell, { fill: background })
     })
+
+    // TODO: do this in ROOT under /text
+    const ctx = cmd.ctx
+    ctx.save()
+    // ctx.translate(0.03, 0.8)
+    // ctx.rotate(Math.PI / 2)
+    ctx.scale(1, -1) // upside down?
+    ctx.font = '0.1px Monaco'
+    ctx.fillStyle = background
+    // ctx.fillStyle = col.luminance() > 128 ? 'black' : 'white'
+    // ctx.fillText(col.toHex(), 0, 0)
+    // ctx.fillText(colorNames[index], 1.0, 0)
+    ctx.fillText('hello world', rect.pos[0], rect.pos[1] - 0.01)
+    ctx.restore()
 }

@@ -1,3 +1,5 @@
+export type { Vec2 } from './types'
+
 export { Arc } from './shapes/Arc'
 export { Circle } from './shapes/Circle'
 export { Ellipse } from './shapes/Ellipse'
