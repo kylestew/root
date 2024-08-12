@@ -45,14 +45,16 @@
 
             // import { floodFill } from './sketches/flood_fill'
             // import { tarbelNodeToNode } from './sketches/tarbel_node_to_node'
-            import { gridStudies } from './sketches/grid_studies'
+            // import { gridStudies } from './sketches/grid_studies'
+            import { shapeOfDesign } from './sketches/frank_chimero'
 
             const mainCanvas = document.getElementById('mainCanvas')
             const cmd = createCanvas(1200, 1600, mainCanvas, [-1, 1])
 
             const palette = randomPalette()
 
-            gridStudies(cmd, palette)
+            // gridStudies(cmd, palette)
+            shapeOfDesign(cmd, palette)
         </script>
         <!-- <script type="module">
             import { identity, matTranslate, matRotate, matScale } from 'root/math'
