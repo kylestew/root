@@ -6,7 +6,7 @@ export class Circle {
      * Creates a Circle object
      *
      * @constructor
-     * @param {Vec2} pos - The position of the object.
+     * @param {Vec2} pos - The center of the circle.
      * @param {number} r - The radius of the object.
      */
     constructor(pos, r, attribs = {}) {

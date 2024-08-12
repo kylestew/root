@@ -1,14 +1,15 @@
-import { Arc, Circle, Ellipse, Line, Polygon, Polyline, Rectangle } from '../index';
+import { toVec3 } from '../types';
+import { Arc, Circle, Ellipse, Line, Polygon, Polyline, Rectangle, Cube } from '../index';
 import { asPoints } from './asPoints';
 /**
  * Translates given shape by given `offset` vector.
  *
  * @param shape
- * @param offset - [x, y] offset vector
+ * @param offset - [x, y] | [x, y, z] offset vector
  */
 export function translate(shape, offset) {
-    if (!Array.isArray(offset) || offset.length !== 2) {
-        throw new Error('Offset must be a 2D vector');
+    if (!Array.isArray(offset) || (offset.length !== 2 && offset.length !== 3)) {
+        throw new Error('Offset must be a 2D or 3D vector');
     }
     if (shape instanceof Arc) {
     }
@@ -36,6 +37,10 @@ export function translate(shape, offset) {
     }
     else if (shape instanceof Rectangle) {
         return new Rectangle([shape.pos[0] + offset[0], shape.pos[1] + offset[1]], shape.size, shape.attribs);
+    }
+    else if (shape instanceof Cube) {
+        const vecOffset = toVec3(offset);
+        return new Cube([shape.pos[0] + vecOffset[0], shape.pos[1] + vecOffset[1], shape.pos[2] + vecOffset[2]], shape.size, shape.attribs);
     }
     throw new Error(`Method not implemented on ${shape.constructor.name}`);
 }

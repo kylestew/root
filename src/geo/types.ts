@@ -1,5 +1,6 @@
 export type Vec2 = [number, number]
 export type Vec3 = [number, number, number]
+export type Vec = Vec2 | Vec3
 
 export function toVec2(value: number | Vec2 | Vec3): Vec2 {
     if (typeof value === 'number') {
@@ -50,9 +51,6 @@ export interface Attribs {
     lineJoin?: CanvasLineJoin
     lineDash?: number[]
 
-    // 3D Blender
-    name?: string
-    // material: ...
     rotation?: Vec3
     scale?: Vec3
 }

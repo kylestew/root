@@ -1,5 +1,6 @@
 export type Vec2 = [number, number];
 export type Vec3 = [number, number, number];
+export type Vec = Vec2 | Vec3;
 export declare function toVec2(value: number | Vec2 | Vec3): Vec2;
 export declare function toVec3(value: number | Vec2 | Vec3): Vec3;
 export type Pt = {
@@ -23,7 +24,6 @@ export interface Attribs {
     lineCap?: CanvasLineCap;
     lineJoin?: CanvasLineJoin;
     lineDash?: number[];
-    name?: string;
     rotation?: Vec3;
     scale?: Vec3;
 }

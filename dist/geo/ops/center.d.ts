@@ -7,4 +7,4 @@ import { Circle, Line, Polygon, Polyline, Rectangle } from '../index';
  * @param shape
  * @param p
  */
-export declare function center(shape: Shape, p: Vec2): Circle | Line | Polygon | Polyline | Rectangle;
+export declare function center(shape: Shape, p: Vec2): Circle | Line | Polygon | Polyline | Rectangle | import("../index").Cube;
