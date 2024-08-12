@@ -40,10 +40,10 @@ export function checkers(shape, rows = 10, columns = 10, color = 'black') {
     // convert bounding rect to grid and create checkers in it
     const rect = bounds(shape);
     const grid = Grid.withRect(rect, rows, columns);
-    return grid.cells().map(({ row, col, pos, size }) => {
+    return grid.cells().map(({ row, col, center, size }) => {
         const color = colors[(col + row) % colors.length];
         // overcome small gaps in checkers
-        return new Rectangle(pos, addN(size, 0.001), { fill: color });
+        return new Rectangle(center, addN(size, 0.001), { fill: color });
     });
 }
 export function dotGrid(shape, sideCount = 10, radMult = 0.5, color = 'black') {

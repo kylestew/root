@@ -1,4 +1,5 @@
 import { Arc, Circle, Ellipse, Line, Polygon, Polyline, Rectangle } from '../index';
+import { Cube } from '../index';
 import { pointAt } from '../index';
 /**
  * Computes centroid (center point) of given shape
@@ -37,6 +38,13 @@ export function centroid(shape) {
     }
     else if (shape instanceof Rectangle) {
         return [shape.pos[0] + shape.size[0] / 2, shape.pos[1] + shape.size[1] / 2];
+    }
+    else if (shape instanceof Cube) {
+        return [
+            shape.pos[0] + shape.size[0] / 2,
+            shape.pos[1] + shape.size[1] / 2,
+            shape.pos[2] + shape.size[2] / 2,
+        ]; // Cube is 3D, so return Vec3
     }
     throw new Error(`Method not implemented on ${shape.constructor.name}`);
 }

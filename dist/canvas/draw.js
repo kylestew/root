@@ -1,4 +1,4 @@
-import { Arc, Circle, Ellipse, Line, Polygon, Polyline, Rectangle, Quadratic } from '../geo/index';
+import { Arc, Circle, Ellipse, Line, Polygon, Polyline, Rectangle, Quadratic, Grid } from '../geo/index';
 import { asPath } from '../geo/index';
 function isPt(obj) {
     return typeof obj.x === 'number' && typeof obj.y === 'number';
@@ -18,6 +18,10 @@ export function draw(ctx, geo, attribs = {}) {
         }
         // else draw each sub-element
         geo.forEach((g) => draw(ctx, g, attribs));
+        return;
+    }
+    else if (geo instanceof Grid) {
+        geo.rects().forEach((rect) => draw(ctx, rect, attribs));
         return;
     }
     else if (isPt(geo)) {

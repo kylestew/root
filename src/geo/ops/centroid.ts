@@ -1,5 +1,6 @@
-import { Shape, Vec2 } from '../types'
+import { Shape, Shape2D, Shape3D, Vec2, Vec3 } from '../types'
 import { Arc, Circle, Ellipse, Line, Polygon, Polyline, Rectangle } from '../index'
+import { Cube } from '../index'
 
 import { pointAt } from '../index'
 
@@ -8,12 +9,12 @@ import { pointAt } from '../index'
  *
  * @param shape
  */
-export function centroid(shape: Shape): Vec2 {
+export function centroid<T extends Shape2D | Shape3D>(shape: T): T extends Shape3D ? Vec3 : Vec2 {
     if (shape instanceof Arc) {
     } else if (shape instanceof Circle || shape instanceof Ellipse) {
-        return shape.pos
+        return shape.pos as any
     } else if (shape instanceof Line) {
-        return pointAt(shape, 0.5)
+        return pointAt(shape, 0.5) as any
     } else if (shape instanceof Polygon) {
         const pts = shape.pts
 
@@ -35,10 +36,16 @@ export function centroid(shape: Shape): Vec2 {
         const centroidX = xSum / (6 * area)
         const centroidY = ySum / (6 * area)
 
-        return [centroidX, centroidY]
+        return [centroidX, centroidY] as any
     } else if (shape instanceof Polyline) {
     } else if (shape instanceof Rectangle) {
-        return [shape.pos[0] + shape.size[0] / 2, shape.pos[1] + shape.size[1] / 2]
+        return [shape.pos[0] + shape.size[0] / 2, shape.pos[1] + shape.size[1] / 2] as any
+    } else if (shape instanceof Cube) {
+        return [
+            shape.pos[0] + shape.size[0] / 2,
+            shape.pos[1] + shape.size[1] / 2,
+            shape.pos[2] + shape.size[2] / 2,
+        ] as any // Cube is 3D, so return Vec3
     }
     throw new Error(`Method not implemented on ${shape.constructor.name}`)
 }

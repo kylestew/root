@@ -1,4 +1,4 @@
-import { Vec2, Shape } from '../geo/types'
+import { Vec2, Shape, Shape2D } from '../geo/types'
 
 import { Line, Circle, Rectangle, Grid } from '../geo/index'
 import { centroid, asPoints, bounds } from '../geo/index'
@@ -6,7 +6,7 @@ import { addN } from '../math/index'
 
 // shape: bounds shape (must implement bounds and center)
 // count: number of lines in shape
-export function lines(shape: Shape, count: number, theta = Math.PI / 4, color = 'black') {
+export function lines(shape: Shape2D, count: number, theta = Math.PI / 4, color = 'black') {
     const colors = Array.isArray(color) ? color : [color]
 
     // largest side defines number of lines
@@ -50,10 +50,10 @@ export function checkers(shape: Shape, rows = 10, columns = 10, color = 'black')
     const rect = bounds(shape)
     const grid = Grid.withRect(rect, rows, columns)
 
-    return grid.cells().map(({ row, col, pos, size }) => {
+    return grid.cells().map(({ row, col, center, size }) => {
         const color = colors[(col + row) % colors.length]
         // overcome small gaps in checkers
-        return new Rectangle(pos, addN(size, 0.001) as Vec2, { fill: color })
+        return new Rectangle(center, addN(size, 0.001) as Vec2, { fill: color })
     })
 }
 

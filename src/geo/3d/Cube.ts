@@ -1,7 +1,8 @@
 import { Vec3, Attribs } from '../types'
+import { Rectangle } from '../2d/Rectangle'
 
 export class Cube {
-    pos: Vec3
+    pos: Vec3 // center of cube - defaults origin to center
     size: Vec3
     attribs: Attribs
 
@@ -27,26 +28,17 @@ export class Cube {
     }
 
     /**
-     * Creates a new `Cube` object from a center point and size.
+     * Creates a new `Cube` object from a specified Rectangle. The 3rd dimension is set to the average of the first 2.
      *
-     * @param {Vec3} center - The center point of the cube.
-     * @param {Vec3} size - The size of the cube as an array of width, height, and depth.
+     * @param {Rectangle} rect - The rectangle object used to create the cube.
      *
      * @returns {Cube} The created cube object.
      */
-    static withCenter(center: Vec3, size: Vec3, attribs: Attribs = {}) {
-        const halfWidth = size[0] / 2
-        const halfHeight = size[1] / 2
-        const halfDepth = size[2] / 2
-        const pos: Vec3 = [center[0] - halfWidth, center[1] - halfHeight, center[2] - halfDepth]
-        return new Cube(pos, size, attribs)
-    }
+    // static withRect(rect: Rectangle) {
+    //     // Calculate the third dimension as the average of the rectangle's width and height
+    //     const depth = (rect.size[0] + rect.size[1]) / 2
 
-    /**
-     * Returns the maximum coordinates of the cube.
-     * @returns {Vec3} An array containing the maximum coordinates [x, y, z].
-     */
-    get max(): Vec3 {
-        return [this.pos[0] + this.size[0], this.pos[1] + this.size[1], this.pos[2] + this.size[2]]
-    }
+    //     // Create and return a new Cube object using the rectangle's width, height, and calculated depth
+    //     return new Cube(rect.size[0], rect.size[1], depth)
+    // }
 }

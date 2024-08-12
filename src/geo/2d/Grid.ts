@@ -1,14 +1,14 @@
 import { Vec2 } from '../types'
 import { Rectangle } from './Rectangle.js'
+import { centroid } from '../ops/centroid'
 
 export interface GridCell {
     index: number
     t: number
-    pos: Vec2
+    center: Vec2
     size: Vec2
     row: number
     col: number
-    center: Vec2
     rect: Rectangle
 }
 
@@ -18,7 +18,11 @@ export class Grid {
     rows: number
     cols: number
 
-    constructor(pos: Vec2, size: Vec2, rows: number, cols: number) {
+    constructor(center: Vec2, size: Vec2, rows: number, cols: number) {
+        const halfWidth = size[0] / 2
+        const halfHeight = size[1] / 2
+        const pos: Vec2 = [center[0] - halfWidth, center[1] - halfHeight]
+
         this.pos = pos
         this.size = size
         this.rows = rows
@@ -26,7 +30,7 @@ export class Grid {
     }
 
     static withRect(rect: Rectangle, rows: number, cols: number) {
-        return new Grid(rect.pos, rect.size, rows, cols)
+        return new Grid(centroid(rect), rect.size, rows, cols)
     }
 
     get cellCount() {
@@ -37,30 +41,12 @@ export class Grid {
         return [this.size[0] / this.cols, this.size[1] / this.rows]
     }
 
-    rects(): Rectangle[] {
-        let [cellWidth, cellHeight] = this.cellSize
-
-        let grid = []
-        for (let i = 0; i < this.rows; i++) {
-            for (let j = 0; j < this.cols; j++) {
-                grid.push(this.generateCell(i, j, cellWidth, cellHeight))
-            }
-        }
-        return grid
+    centers(): Vec2[] {
+        return this.cells().map((cell) => cell.center)
     }
 
-    centers(): Vec2[] {
-        let [cellWidth, cellHeight] = this.cellSize
-
-        let centers: Vec2[] = []
-        for (let i = 0; i < this.rows; i++) {
-            for (let j = 0; j < this.cols; j++) {
-                let x = this.pos[0] + j * cellWidth + cellWidth / 2
-                let y = this.pos[1] + i * cellHeight + cellHeight / 2
-                centers.push([x, y])
-            }
-        }
-        return centers
+    rects(): Rectangle[] {
+        return this.cells().map((cell) => cell.rect)
     }
 
     cells(): GridCell[] {
@@ -70,26 +56,20 @@ export class Grid {
         let index = 0
         for (let i = 0; i < this.rows; i++) {
             for (let j = 0; j < this.cols; j++) {
-                let x = this.pos[0] + j * cellWidth
-                let y = this.pos[1] + i * cellHeight
+                let cx = this.pos[0] + j * cellWidth + cellWidth / 2
+                let cy = this.pos[1] + i * cellHeight + cellHeight / 2
+                const rect = new Rectangle([cx, cy], [cellWidth, cellHeight])
                 cells.push({
                     row: i,
                     col: j,
                     index: index++,
                     t: index / this.cellCount,
-                    pos: [x, y],
+                    center: [cx, cy],
                     size: [cellWidth, cellHeight],
-                    center: [x + cellWidth / 2, y + cellHeight / 2],
-                    rect: this.generateCell(i, j, cellWidth, cellHeight),
+                    rect,
                 })
             }
         }
         return cells
-    }
-
-    private generateCell(row: number, col: number, cellWidth: number, cellHeight: number): Rectangle {
-        let x = this.pos[0] + col * cellWidth
-        let y = this.pos[1] + row * cellHeight
-        return new Rectangle([x, y], [cellWidth, cellHeight])
     }
 }
