@@ -1,18 +1,72 @@
-import { Line, Vec2 } from 'root/geo'
-import { taperedLine } from 'root/mark'
+import { Line, Circle, pointAt } from 'root/geo'
+import { mapRange } from 'root/math'
+import { random } from 'root/random'
+import { simplex3 } from 'root/random'
+import { color } from 'root/color'
+import { createGLCanvas, createOffscreenCanvas } from 'root/canvas'
 
-export function shapeOfDesign(cmd) {
+import { simpleVertShader } from 'root/pixel/shaders'
+import fragShaderSource from './shaders/noisy_texture.frag?raw'
+
+export function taperedLine(line: Line, weights: [number, number]): Line[] {
+    const segCount = Math.round(line.length * 400)
+    const segmentLength = 1.0 / segCount
+
+    let segments: Line[] = []
+    for (let i = 0; i < segCount; i++) {
+        const progress = i / segCount
+        const weigth = mapRange(progress, 0, 1, weights[0], weights[1])
+        const lineSeg = new Line(pointAt(line, progress), pointAt(line, progress + segmentLength), { weight: weigth })
+        segments.push(lineSeg)
+    }
+    return segments
+}
+
+export function shapeOfDesign(canvas) {
     const background = '#f5f5f5'
     const primary = '#b95b23'
     const secondary = '#000000'
     const text = '#333333'
 
-    cmd.clear(background)
+    // main GL canvas
+    const w = canvas.width
+    const h = canvas.height
+    const gl = createGLCanvas(w, h, canvas)
+    const shader = gl.loadShader(simpleVertShader, fragShaderSource)
+    if (!shader) return
 
-    const lineStart: Vec2 = [-0.8, -1]
-    const lineEnd: Vec2 = [0.8, 1]
+    // offscreen canvas to draw design in
+    const cmd = createOffscreenCanvas(w, h, [-1, 1])
+    // cmd.clear(background)
+    cmd.clear('#00ff00')
 
-    const line = new Line(lineStart, lineEnd)
-    const tapered = taperedLine(line, [0.005, 0.02])
-    cmd.draw(tapered, { stroke: primary, lineCap: 'round' })
+    let t = 0
+    const circle = new Circle([0, 0], 0.5)
+    while (t < 0.998) {
+        // baseline
+        // const [x, y] = pointAt(circle, t)
+        // const line = new Line([0, 0], [x, y])
+        // extend line
+        // const lengthMult = 0.5 + Math.abs(simplex3(x, y, Date.now()))
+        // const extPoint = pointAt(line, lengthMult)
+        // const extendedLine = new Line([0, 0], extPoint)
+        // draw as tapered line
+        // const upper = extendedLine.length * 0.008
+        // const tapered = taperedLine(extendedLine, [random(0.0005, 0.001), upper])
+        // const tapered = taperedLine(extendedLine, [0.00001, upper])
+        // cmd.draw(tapered, { stroke: primary, lineCap: 'round' })
+        // t += random(0.008, 0.012)
+    }
+
+    // TODO: overlay noise texture
+
+    // PitchWeb, Courier, monospace
+
+    gl.clear(color('#ff0000').toGLSL())
+    // gl.useShader(shader)
+
+    // console.log(cmd)
+    // gl.useTexture(gl.TEXTURE0, 'tex0', cmd.canvas)
+
+    // gl.drawScreen()
 }

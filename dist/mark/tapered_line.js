@@ -1,7 +1,8 @@
 import { Line, pointAt } from '../geo/index';
 import { mapRange } from '../math/index';
 export function taperedLine(line, weights) {
-    const segCount = Math.round(line.length * 20);
+    const segCount = Math.round(line.length * 100);
+    console.log(segCount);
     const segmentLength = 1.0 / segCount;
     let segments = [];
     for (let i = 0; i < segCount; i++) {

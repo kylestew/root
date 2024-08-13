@@ -3,4 +3,3 @@ export { lines as linesFill } from './pattern_fills';
 export { checkers as checkersFill } from './pattern_fills';
 export { dotGrid as dotGridFill } from './pattern_fills';
 export { sand } from './sand';
-export { taperedLine } from './tapered_line';

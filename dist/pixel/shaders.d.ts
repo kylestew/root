@@ -1,0 +1,1 @@
+export declare const simpleVertShader = "\n#version 300 es\nin vec4 aPosition;\nin vec2 aTexCoord;\n\nout vec2 vTexCoord;\n\nvoid main() {\n    vTexCoord = aTexCoord;\n    gl_Position = aPosition;\n}\n";

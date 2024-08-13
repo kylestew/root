@@ -42,6 +42,10 @@
         "./pixel": {
             "types": "./dist/pixel/index.d.ts",
             "default": "./dist/pixel/index.js"
+        },
+        "./pixel/shaders": {
+            "types": "./dist/pixel/shaders/index.d.ts",
+            "default": "./dist/pixel/shaders/index.js"
         }
     },
     "type": "module",

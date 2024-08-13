@@ -49,12 +49,12 @@
             import { shapeOfDesign } from './sketches/frank_chimero'
 
             const mainCanvas = document.getElementById('mainCanvas')
-            const cmd = createCanvas(1200, 1600, mainCanvas, [-1, 1])
-
+            mainCanvas.width = 1200
+            mainCanvas.height = 1400
             const palette = randomPalette()
 
             // gridStudies(cmd, palette)
-            shapeOfDesign(cmd, palette)
+            shapeOfDesign(mainCanvas, palette)
         </script>
         <!-- <script type="module">
             import { identity, matTranslate, matRotate, matScale } from 'root/math'
