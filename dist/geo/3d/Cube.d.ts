@@ -8,11 +8,12 @@ export declare class Cube {
      * Cube shape constructor.
      *
      * @constructor
-     * @param {Vec3} pos - The position of the Cube.
+     * @param {Vec3} center - The position of the Cube (origin at center).
      * @param {Vec3} size - The size of the Cube.
      * @param {Attribs} [attribs={}] - Optional attributes for the cube.
      */
-    constructor(pos: number[], size: number[], attribs?: Attribs);
+    constructor(center: number[], size: number[], attribs?: Attribs);
+    get center(): Vec3;
     /**
      * Creates a new `Cube` object from a specified Rectangle. The 3rd dimension is set to the average of the first 2. Z position is set to 0.
      *

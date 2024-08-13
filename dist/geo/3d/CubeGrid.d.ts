@@ -3,23 +3,24 @@ import { Cube } from './Cube.js';
 export interface GridCell3D {
     index: number;
     t: number;
-    pos: Vec3;
+    center: Vec3;
     size: Vec3;
     row: number;
     col: number;
     layer: number;
-    center: Vec3;
     cube: Cube;
 }
 export declare class CubeGrid {
-    center: Vec3;
+    pos: Vec3;
     size: Vec3;
     rows: number;
     cols: number;
     layers: number;
     constructor(center: Vec3, size: Vec3, rows: number, cols: number, layers: number);
+    static withCube(cube: Cube, rows: number, cols: number, layers: number): CubeGrid;
     get cellCount(): number;
     get cellSize(): number[];
+    centers(): Vec3[];
     cubes(): Cube[];
-    private generateCell;
+    cells(): GridCell3D[];
 }

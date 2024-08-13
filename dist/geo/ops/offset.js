@@ -22,7 +22,7 @@ export function offset(shape, dist) {
     else if (shape instanceof Cube) {
         const offsetVec = toVec3(dist);
         const newSize = [shape.size[0] + offsetVec[0], shape.size[1] + offsetVec[1], shape.size[2] + offsetVec[2]];
-        return new Cube(shape.pos, newSize, shape.attribs);
+        return new Cube(centroid(shape), newSize, shape.attribs);
     }
     throw new Error(`Method not implemented on ${shape.constructor.name}`);
 }

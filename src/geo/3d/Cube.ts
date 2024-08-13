@@ -11,21 +11,34 @@ export class Cube {
      * Cube shape constructor.
      *
      * @constructor
-     * @param {Vec3} pos - The position of the Cube.
+     * @param {Vec3} center - The position of the Cube (origin at center).
      * @param {Vec3} size - The size of the Cube.
      * @param {Attribs} [attribs={}] - Optional attributes for the cube.
      */
-    constructor(pos: number[], size: number[], attribs: Attribs = {}) {
-        if (pos.length !== 3) {
+    constructor(center: number[], size: number[], attribs: Attribs = {}) {
+        if (center.length !== 3) {
             throw new Error('Position array must have exactly three elements.')
         }
         if (size.length !== 3) {
             throw new Error('Size array must have exactly three elements.')
         }
 
-        this.pos = pos as Vec3
+        const halfWidth = size[0] / 2
+        const halfHeight = size[1] / 2
+        const halfDepth = size[2] / 2
+        const pos: Vec3 = [center[0] - halfWidth, center[1] - halfHeight, center[2] - halfDepth]
+
+        this.pos = pos
         this.size = size as Vec3
         this.attribs = attribs
+    }
+
+    get center(): Vec3 {
+        const halfWidth = this.size[0] / 2
+        const halfHeight = this.size[1] / 2
+        const halfDepth = this.size[2] / 2
+        const center: Vec3 = [this.pos[0] + halfWidth, this.pos[1] + halfHeight, this.pos[2] + halfDepth]
+        return center
     }
 
     /**
