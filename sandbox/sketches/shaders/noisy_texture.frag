@@ -4,18 +4,6 @@ precision highp float;
 in vec2 vTexCoord;
 
 uniform sampler2D tex0;
-uniform float time;
-
-void drawGrid(vec2 st, inout vec3 pixel) {
-    const float tickWidth = 0.1;
-    vec3 gridColor = vec3(0.5);
-    if (mod(st.x, tickWidth) < 0.002) pixel = gridColor;
-    if (mod(st.y, tickWidth) < 0.002) pixel = gridColor;
-
-    vec3 axesColor = vec3(1, 1, 1);
-    if (abs(st.x) < 0.004) pixel = axesColor;
-    if (abs(st.y) < 0.004) pixel = axesColor;
-}
 
 //	Simplex 3D Noise
 //	by Ian McEwan, Stefan Gustavson (https://github.com/stegu/webgl-noise)
@@ -96,28 +84,28 @@ float random(vec2 st) { return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43
 out vec4 fragColor;
 
 void main() {
-    float zOffset = time * 0.0005;
+    float zOffset = 0.0005;
 
     // offset UVs to remove sharp edges
-    float randomScale = 0.015;
+    float randomScale = 0.0002;
     vec2 noisyUv =
         vTexCoord +
         vec2(random(vTexCoord + zOffset), random(vTexCoord + 0.12345 + zOffset)) * randomScale;
     vec4 color = texture(tex0, noisyUv);
 
-    // offset color based on noise to break up solid color areas
-    float noiseScale = 0.2;
-    float noiseMult = 4.0;  // higher means more repeats of the noise field
+    // // offset color based on noise to break up solid color areas
+    float noiseScale = 0.3;
+    float noiseMult = 28.0;  // higher means more repeats of the noise field
     vec3 noiseColor = vec3(snoise(vec3(noisyUv * noiseMult, 1.2345 + zOffset)) * 0.5 + 0.5,
                            snoise(vec3(noisyUv * noiseMult, 2.9273 + zOffset)) * 0.5 + 0.5,
                            snoise(vec3(noisyUv * noiseMult, 3.7029 + zOffset)) * 0.5 + 0.5);
     noiseColor *= noiseScale;
 
-    // add colored noise
-    color.rgb += noiseColor;
-
     // add greyscale noise
-    // color.rgb += noiseColor.r;
+    color.rgb += 0.2 * noiseColor.r;
+
+    // add random texture
+    color.rgb += 0.25 * (vec3(random(vTexCoord + zOffset)) - 0.5);
 
     fragColor = color;
 }

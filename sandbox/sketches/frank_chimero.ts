@@ -37,36 +37,36 @@ export function shapeOfDesign(canvas) {
 
     // offscreen canvas to draw design in
     const cmd = createOffscreenCanvas(w, h, [-1, 1])
-    // cmd.clear(background)
-    cmd.clear('#00ff00')
+    cmd.clear(background)
 
     let t = 0
     const circle = new Circle([0, 0], 0.5)
-    while (t < 0.998) {
+    const tOffset = random(0, 1)
+    while (t < 1.0 - 0.008) {
         // baseline
-        // const [x, y] = pointAt(circle, t)
-        // const line = new Line([0, 0], [x, y])
-        // extend line
-        // const lengthMult = 0.5 + Math.abs(simplex3(x, y, Date.now()))
-        // const extPoint = pointAt(line, lengthMult)
-        // const extendedLine = new Line([0, 0], extPoint)
-        // draw as tapered line
-        // const upper = extendedLine.length * 0.008
-        // const tapered = taperedLine(extendedLine, [random(0.0005, 0.001), upper])
-        // const tapered = taperedLine(extendedLine, [0.00001, upper])
-        // cmd.draw(tapered, { stroke: primary, lineCap: 'round' })
-        // t += random(0.008, 0.012)
-    }
+        const [x, y] = pointAt(circle, t + tOffset)
+        const line = new Line([0, 0], [x, y])
 
-    // TODO: overlay noise texture
+        // extend line
+        const lengthMult = 0.5 + Math.abs(simplex3(x, y, Date.now()))
+        const extPoint = pointAt(line, lengthMult)
+        const extendedLine = new Line([0, 0], extPoint)
+
+        // draw as tapered line
+        const upper = extendedLine.length * 0.008
+        // const tapered = taperedLine(extendedLine, [random(0.0005, 0.001), upper])
+        const tapered = taperedLine(extendedLine, [0.00003, upper])
+        cmd.draw(tapered, { stroke: primary, lineCap: 'round' })
+
+        t += random(0.008, 0.016)
+    }
 
     // PitchWeb, Courier, monospace
 
-    gl.clear(color('#ff0000').toGLSL())
-    // gl.useShader(shader)
+    gl.clear(color('#000000').toGLSL())
+    gl.useShader(shader)
 
-    // console.log(cmd)
-    // gl.useTexture(gl.TEXTURE0, 'tex0', cmd.canvas)
+    gl.useTexture(gl.TEXTURE0, 'tex0', cmd.canvas)
 
-    // gl.drawScreen()
+    gl.drawScreen()
 }
