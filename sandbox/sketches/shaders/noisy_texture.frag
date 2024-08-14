@@ -83,29 +83,73 @@ float random(vec2 st) { return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43
 
 out vec4 fragColor;
 
-void main() {
-    float zOffset = 0.0005;
+// Pseudo-random number generator based on the input vector
+float rand(vec2 p) { return fract(sin(dot(p.xy, vec2(127.1, 311.7))) * 43758.5453123); }
 
-    // offset UVs to remove sharp edges
-    float randomScale = 0.0002;
-    vec2 noisyUv =
-        vTexCoord +
-        vec2(random(vTexCoord + zOffset), random(vTexCoord + 0.12345 + zOffset)) * randomScale;
-    vec4 color = texture(tex0, noisyUv);
+// GLSL function to generate 2D Perlin noise
+float noise(vec2 p) {
+    vec2 i = floor(p);
+    vec2 f = fract(p);
+    vec2 u = f * f * (3.0 - 2.0 * f);
 
-    // // offset color based on noise to break up solid color areas
-    float noiseScale = 0.3;
-    float noiseMult = 28.0;  // higher means more repeats of the noise field
-    vec3 noiseColor = vec3(snoise(vec3(noisyUv * noiseMult, 1.2345 + zOffset)) * 0.5 + 0.5,
-                           snoise(vec3(noisyUv * noiseMult, 2.9273 + zOffset)) * 0.5 + 0.5,
-                           snoise(vec3(noisyUv * noiseMult, 3.7029 + zOffset)) * 0.5 + 0.5);
-    noiseColor *= noiseScale;
-
-    // add greyscale noise
-    color.rgb += 0.2 * noiseColor.r;
-
-    // add random texture
-    color.rgb += 0.25 * (vec3(random(vTexCoord + zOffset)) - 0.5);
-
-    fragColor = color;
+    return mix(mix(rand(i + vec2(0.0, 0.0)), rand(i + vec2(1.0, 0.0)), u.x),
+               mix(rand(i + vec2(0.0, 1.0)), rand(i + vec2(1.0, 1.0)), u.x), u.y);
 }
+
+// Generate a paper-like texture
+vec3 paperTexture(vec2 uv) {
+    float scale = 10.0;        // Scale of the texture
+    float grainScale = 100.0;  // Scale for grain effect
+    float fiberScale = 5.0;    // Scale for fiber effect
+
+    // Generate base noise for the texture
+    float baseNoise = noise(uv * scale);
+
+    // Add finer grain detail
+    float grain = noise(uv * grainScale) * 0.2;
+
+    // Simulate fibers by distorting the noise
+    float fibers = noise(vec2(uv.x * fiberScale, uv.y * fiberScale * 0.5)) * 0.5;
+
+    // Combine the effects
+    float paperValue = baseNoise + grain + fibers;
+
+    // Normalize and return as a grayscale value
+    return vec3(paperValue);
+}
+
+void main() {
+    // vec2 uv = gl_FragCoord.xy / resolution.xy;
+
+    // Get the paper texture color
+    vec3 color = paperTexture(vTexCoord);
+
+    fragColor = vec4(color, 1.0);
+}
+
+// void main() {
+//     float zOffset = 0.0005;
+
+//     // offset UVs to remove sharp edges
+//     float randomScale = 0.0002;
+//     vec2 noisyUv =
+//         vTexCoord +
+//         vec2(random(vTexCoord + zOffset), random(vTexCoord + 0.12345 + zOffset)) * randomScale;
+//     vec4 color = texture(tex0, noisyUv);
+
+//     // // offset color based on noise to break up solid color areas
+//     float noiseScale = 0.3;
+//     float noiseMult = 28.0;  // higher means more repeats of the noise field
+//     vec3 noiseColor = vec3(snoise(vec3(noisyUv * noiseMult, 1.2345 + zOffset)) * 0.5 + 0.5,
+//                            snoise(vec3(noisyUv * noiseMult, 2.9273 + zOffset)) * 0.5 + 0.5,
+//                            snoise(vec3(noisyUv * noiseMult, 3.7029 + zOffset)) * 0.5 + 0.5);
+//     noiseColor *= noiseScale;
+
+//     // add greyscale noise
+//     color.rgb += 0.2 * noiseColor.r;
+
+//     // add random texture
+//     color.rgb += 0.25 * (vec3(random(vTexCoord + zOffset)) - 0.5);
+
+//     fragColor = color;
+// }

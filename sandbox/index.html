@@ -43,10 +43,10 @@
             import { createCanvas } from 'root/canvas'
             import { randomPalette } from './palettes'
 
-            // import { floodFill } from './sketches/flood_fill'
-            // import { tarbelNodeToNode } from './sketches/tarbel_node_to_node'
+            // import { sketch } from './sketches/sod_00_forward'
+            // import { sketch } from './sketches/sod_02_craft_and_beauty'
             // import { gridStudies } from './sketches/grid_studies'
-            import { shapeOfDesign } from './sketches/frank_chimero'
+            import { sketch } from './sketches/shader_study'
 
             const mainCanvas = document.getElementById('mainCanvas')
             mainCanvas.width = 1200
@@ -54,17 +54,7 @@
             const palette = randomPalette()
 
             // gridStudies(cmd, palette)
-            shapeOfDesign(mainCanvas, palette)
+            sketch(mainCanvas, palette)
         </script>
-        <!-- <script type="module">
-            import { identity, matTranslate, matRotate, matScale } from 'root/math'
-
-            let mat = identity()
-            mat = matTranslate(mat, 10, 20)
-            mat = matRotate(mat, [0, 0], 0.3333)
-            mat = matScale(mat, [1, 1])
-
-            console.log(mat)
-        </script> -->
     </body>
 </html>

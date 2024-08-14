@@ -22,11 +22,8 @@ export function taperedLine(line: Line, weights: [number, number]): Line[] {
     return segments
 }
 
-export function shapeOfDesign(canvas) {
-    const background = '#f5f5f5'
-    const primary = '#b95b23'
-    const secondary = '#000000'
-    const text = '#333333'
+export function sketch(canvas, palette) {
+    const { background, primary, secondary, dark } = palette
 
     // main GL canvas
     const w = canvas.width
@@ -60,8 +57,6 @@ export function shapeOfDesign(canvas) {
 
         t += random(0.008, 0.016)
     }
-
-    // PitchWeb, Courier, monospace
 
     gl.clear(color('#000000').toGLSL())
     gl.useShader(shader)

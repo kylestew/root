@@ -106,9 +106,9 @@ export function createGLCanvas(width, height, existingCanvas = undefined) {
         useTexture: function (textureId, uniformName, data) {
             const currentProgram = gl.getParameter(gl.CURRENT_PROGRAM);
             gl.activeTexture(textureId);
-            if (data instanceof HTMLCanvasElement || data instanceof OffscreenCanvas) {
-                const texture = gl.createTexture();
-                gl.bindTexture(gl.TEXTURE_2D, texture);
+            const texture = gl.createTexture();
+            gl.bindTexture(gl.TEXTURE_2D, texture);
+            if (data instanceof HTMLCanvasElement || data instanceof OffscreenCanvas || data instanceof ImageBitmap) {
                 gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, data);
             }
             else {
