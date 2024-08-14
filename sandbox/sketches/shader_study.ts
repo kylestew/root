@@ -14,10 +14,9 @@ export async function sketch(canvas, palette) {
     const shader = gl.loadShader(simpleVertShader, fragShaderSource)
     if (!shader) return
 
-    const imgData = await textureLoader(imageUrl)
-    console.log(imgData)
+    const tex0 = await textureLoader(imageUrl)
 
     gl.useShader(shader)
-    gl.useTexture(gl.TEXTURE0, 'tex0', imgData)
+    gl.useTexture(gl.TEXTURE0, 'tex0', tex0)
     gl.drawScreen()
 }
