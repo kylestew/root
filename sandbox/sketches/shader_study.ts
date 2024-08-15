@@ -18,7 +18,7 @@ export async function sketch(canvas, palette) {
 
     // offscreen canvas to draw design in
     const cmd = createOffscreenCanvas(w, h, [-1, 1])
-    cmd.clear('#ffffff')
+    cmd.clear('#00000000') // draw over clear
 
     const circ = new Circle([0, 0], 0.4)
     cmd.draw(circ, { fill: '#f00' })
@@ -28,7 +28,7 @@ export async function sketch(canvas, palette) {
     gl.useShader(shader)
 
     gl.useTexture(gl.TEXTURE0, 'noiseTex', noiseTex)
-    gl.useTexture(gl.TEXTURE1, 'tex0', cmd.canvas)
+    gl.useTexture(gl.TEXTURE1, 'canvasTex', cmd.canvas)
 
     gl.drawScreen()
 }

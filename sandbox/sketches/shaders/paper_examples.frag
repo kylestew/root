@@ -4,7 +4,7 @@ precision highp float;
 in vec2 vTexCoord;
 
 uniform sampler2D noiseTex;
-uniform sampler2D tex0;
+uniform sampler2D canvasTex;
 
 out vec4 fragColor;
 
@@ -61,12 +61,24 @@ void main() {
 
     // uv coordinates
     vec2 uv = vTexCoord.xy;
+
     // monkey around with UVs for hand drawn effect
-    vec2 wuv = uv - 0.03 * (vec2(fbm(uv * 8.), fbm(uv * 8. + .35)) - .5);
+    // vec2 tex_uv = uv;
+    vec2 tex_uv = uv - 0.03 * (vec2(fbm(uv * 8.), fbm(uv * 8. + .35)) - .5);
 
     // sample incoming canvas texture
-    vec3 col = texture(tex0, wuv).rgb;
+    // canvas is expected to be on a transparent background
+    vec4 tex = texture(canvasTex, tex_uv);
+
+    // screenprint effect
+    // remove some of the canvas texture by reducing its alpha before composite
+    tex.a -= mix(0.0, tex.a, 1.0 - (fbm(uv * 12.) * 1.5 - 0.01));
+
+    // composite texture onto white background
+    vec3 col = mix(vec3(1.0), tex.rgb, tex.a);
+
     // optionally wash out the color with white noise
+    // this might be combined with screenprint effect step
     col = mix(vec3(1.0), col, 1. - texture(noiseTex, uv * 4.).x * 0.3);
 
     // == Procedural Paper ============
@@ -85,6 +97,11 @@ void main() {
     // == Washi =======================
     // ================================
 
+    // apply paper
     col = col * paper;
+
+    // over white background
+    // col = mix(vec3(1.0), )
+
     fragColor = vec4(col, 1.0);
 }
