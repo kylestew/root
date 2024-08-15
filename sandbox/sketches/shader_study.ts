@@ -1,10 +1,12 @@
+import { Circle } from 'root/geo'
 import { createCanvas, createGLCanvas, createOffscreenCanvas } from 'root/canvas'
 import { textureLoader } from 'root/pixel'
 
 import { simpleVertShader } from 'root/pixel/shaders'
-import fragShaderSource from './shaders/sandbox.frag?raw'
+import fragShaderSource from './shaders/paper_examples.frag?raw'
+// import fragShaderSource from './shaders/sandbox.frag?raw'
 
-import imageUrl from '../assets/test.png'
+import valueNoiseTexUrl from '../assets/gray_noise.png'
 
 export async function sketch(canvas, palette) {
     // main GL canvas
@@ -14,9 +16,19 @@ export async function sketch(canvas, palette) {
     const shader = gl.loadShader(simpleVertShader, fragShaderSource)
     if (!shader) return
 
-    const tex0 = await textureLoader(imageUrl)
+    // offscreen canvas to draw design in
+    const cmd = createOffscreenCanvas(w, h, [-1, 1])
+    cmd.clear('#ffffff')
+
+    const circ = new Circle([0, 0], 0.4)
+    cmd.draw(circ, { fill: '#f00' })
+
+    const noiseTex = await textureLoader(valueNoiseTexUrl)
 
     gl.useShader(shader)
-    gl.useTexture(gl.TEXTURE0, 'tex0', tex0)
+
+    gl.useTexture(gl.TEXTURE0, 'noiseTex', noiseTex)
+    gl.useTexture(gl.TEXTURE1, 'tex0', cmd.canvas)
+
     gl.drawScreen()
 }
