@@ -51,6 +51,7 @@ export interface Attribs {
     lineJoin?: CanvasLineJoin
     lineDash?: number[]
 
+    position?: Vec3
     rotation?: Vec3
     scale?: Vec3
 }
