@@ -12,7 +12,7 @@ export { Grid } from './2d/Grid'
 
 export { Plane } from './3d/Plane'
 export { Cube } from './3d/Cube'
-// sphere
+export { Sphere } from './3d/Sphere'
 export { CubeGrid } from './3d/CubeGrid'
 
 export { area } from './ops/area'
