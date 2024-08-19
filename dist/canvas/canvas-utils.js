@@ -11,7 +11,7 @@ import { draw, clear } from './draw';
  * @returns The rendering context of the created canvas.
  * @throws {Error} If canvas is not supported in the browser.
  */
-export function createCanvas(width, height, existingCanvas = undefined, range = undefined) {
+export function createCanvas(width, height, existingCanvas = undefined, range = [-1, 1]) {
     // setup or bind to existing canvas
     let canvas = existingCanvas;
     if (!canvas) {

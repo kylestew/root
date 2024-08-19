@@ -7,4 +7,4 @@ import { Polygon } from '../index';
  * @param shape
  * @param num
  */
-export declare function asPolygon(shape: Shape, num: number): Polygon;
+export declare function asPolygon(shape: Shape, num?: number): Polygon;

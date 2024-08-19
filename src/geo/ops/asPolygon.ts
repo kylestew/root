@@ -10,7 +10,7 @@ import { asPoints } from './asPoints'
  * @param shape
  * @param num
  */
-export function asPolygon(shape: Shape, num: number) {
+export function asPolygon(shape: Shape, num: number = 12) {
     if (shape instanceof Line || shape instanceof Polyline) {
         throw new Error(`Cannot convert ${shape.constructor.name} to Polygon`)
     }

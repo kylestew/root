@@ -33,7 +33,7 @@ export function createCanvas(
     width: number,
     height: number,
     existingCanvas: HTMLCanvasElement | undefined = undefined,
-    range: [number, number] | undefined = undefined
+    range: [number, number] | undefined = [-1, 1]
 ): CanvasCommands {
     // setup or bind to existing canvas
     let canvas = existingCanvas
