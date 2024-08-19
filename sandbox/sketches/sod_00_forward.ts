@@ -55,6 +55,11 @@ export function sketch(canvas, palette) {
         const tapered = taperedLine(extendedLine, [0.00003, upper])
         cmd.draw(tapered, { stroke: primary, lineCap: 'round' })
 
+        // draw a "pen up" circle at the end of the line
+        const rad = upper / 2 + random(0.0008, 0.0014)
+        const circ = new Circle(pointAt(extendedLine, 1), rad)
+        cmd.draw(circ, { fill: primary })
+
         t += random(0.008, 0.016)
     }
 

@@ -118,38 +118,38 @@ vec3 paperTexture(vec2 uv) {
     return vec3(paperValue);
 }
 
-void main() {
-    // vec2 uv = gl_FragCoord.xy / resolution.xy;
-
-    // Get the paper texture color
-    vec3 color = paperTexture(vTexCoord);
-
-    fragColor = vec4(color, 1.0);
-}
-
 // void main() {
-//     float zOffset = 0.0005;
+//     // vec2 uv = gl_FragCoord.xy / resolution.xy;
 
-//     // offset UVs to remove sharp edges
-//     float randomScale = 0.0002;
-//     vec2 noisyUv =
-//         vTexCoord +
-//         vec2(random(vTexCoord + zOffset), random(vTexCoord + 0.12345 + zOffset)) * randomScale;
-//     vec4 color = texture(tex0, noisyUv);
+//     // Get the paper texture color
+//     vec3 color = paperTexture(vTexCoord);
 
-//     // // offset color based on noise to break up solid color areas
-//     float noiseScale = 0.3;
-//     float noiseMult = 28.0;  // higher means more repeats of the noise field
-//     vec3 noiseColor = vec3(snoise(vec3(noisyUv * noiseMult, 1.2345 + zOffset)) * 0.5 + 0.5,
-//                            snoise(vec3(noisyUv * noiseMult, 2.9273 + zOffset)) * 0.5 + 0.5,
-//                            snoise(vec3(noisyUv * noiseMult, 3.7029 + zOffset)) * 0.5 + 0.5);
-//     noiseColor *= noiseScale;
-
-//     // add greyscale noise
-//     color.rgb += 0.2 * noiseColor.r;
-
-//     // add random texture
-//     color.rgb += 0.25 * (vec3(random(vTexCoord + zOffset)) - 0.5);
-
-//     fragColor = color;
+//     fragColor = vec4(color, 1.0);
 // }
+
+void main() {
+    float zOffset = 0.0005;
+
+    // offset UVs to remove sharp edges
+    float randomScale = 0.0002;
+    vec2 noisyUv =
+        vTexCoord +
+        vec2(random(vTexCoord + zOffset), random(vTexCoord + 0.12345 + zOffset)) * randomScale;
+    vec4 color = texture(tex0, noisyUv);
+
+    // // offset color based on noise to break up solid color areas
+    float noiseScale = 0.3;
+    float noiseMult = 28.0;  // higher means more repeats of the noise field
+    vec3 noiseColor = vec3(snoise(vec3(noisyUv * noiseMult, 1.2345 + zOffset)) * 0.5 + 0.5,
+                           snoise(vec3(noisyUv * noiseMult, 2.9273 + zOffset)) * 0.5 + 0.5,
+                           snoise(vec3(noisyUv * noiseMult, 3.7029 + zOffset)) * 0.5 + 0.5);
+    noiseColor *= noiseScale;
+
+    // add greyscale noise
+    color.rgb += 0.2 * noiseColor.r;
+
+    // add random texture
+    color.rgb += 0.25 * (vec3(random(vTexCoord + zOffset)) - 0.5);
+
+    fragColor = color;
+}
