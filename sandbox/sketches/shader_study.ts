@@ -4,7 +4,6 @@ import { textureLoader } from 'root/pixel'
 
 import { simpleVertShader } from 'root/pixel/shaders'
 import fragShaderSource from './shaders/paper_examples.frag?raw'
-// import fragShaderSource from './shaders/sandbox.frag?raw'
 
 import valueNoiseTexUrl from '../assets/gray_noise.png'
 
@@ -26,9 +25,7 @@ export async function sketch(canvas, palette) {
     const noiseTex = await textureLoader(valueNoiseTexUrl)
 
     gl.useShader(shader)
-
     gl.useTexture(gl.TEXTURE0, 'noiseTex', noiseTex)
     gl.useTexture(gl.TEXTURE1, 'canvasTex', cmd.canvas)
-
     gl.drawScreen()
 }

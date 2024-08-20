@@ -1,6 +1,6 @@
 import { Vec2, Shape, Polygon, Rectangle, Circle, Line, rotate, translate, pointAt } from 'root/geo'
 import { gaussian, pickRandom } from 'root/random'
-import { degreesToRadians, add, sub } from 'root/math'
+import { degreesToRadians } from 'root/math'
 import { createCanvas } from '../../dist/canvas'
 
 type Orientation = 0 | 90 | 180 | 270
@@ -62,7 +62,7 @@ function makeSymbols(): Shape[] {
     // (1) Place first symbol
     const pos: Vec2 = [gaussian(0, 0.1), gaussian(0, 0.2)]
     const orientation = pickRandom([0, 90, 180, 270])
-    const size = 0.4
+    const size = 0.2
     const symbol = new Resistor(pos, orientation, size)
 
     // (2) For each port on symbol, start a current moving away from the symbol

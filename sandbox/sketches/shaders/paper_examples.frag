@@ -186,8 +186,8 @@ void main() {
     // pixel coordinates
     vec2 coord = gl_FragCoord.xy;
 
-    // uv coordinates
-    vec2 uv = vTexCoord.xy;
+    // uv coordinates (flipped)
+    vec2 uv = vec2(vTexCoord.x, 1.0 - vTexCoord.y);
 
     // monkey around with UVs for hand drawn effect
     vec2 tex_uv = uv;
