@@ -12,7 +12,7 @@ interface CanvasCommands {
     toPixelSpace: (pt: [number, number]) => [number, number];
     setRange: (range: [number, number]) => CanvasRangeInfo;
     clear: (clearColor: string) => void;
-    draw: (geo: GeoData, attribs: Attribs) => void;
+    draw: (geo: GeoData, attribs?: Attribs) => void;
 }
 /**
  * Creates a canvas element with the specified width and height, and returns its rendering context.

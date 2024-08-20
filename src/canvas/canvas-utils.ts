@@ -15,7 +15,7 @@ interface CanvasCommands {
     toPixelSpace: (pt: [number, number]) => [number, number]
     setRange: (range: [number, number]) => CanvasRangeInfo
     clear: (clearColor: string) => void
-    draw: (geo: GeoData, attribs: Attribs) => void
+    draw: (geo: GeoData, attribs?: Attribs) => void
 }
 
 /**
@@ -65,7 +65,7 @@ export function createCanvas(
         toPixelSpace: (pt: [number, number]) => toPixelSpace(ctx, pt),
         setRange: (range: [number, number]) => setCanvasRange(ctx, range),
         clear: (clearColor: string) => clear(ctx, clearColor),
-        draw: (geo: GeoData, attribs: Attribs) => draw(ctx, geo, attribs),
+        draw: (geo: GeoData, attribs?: Attribs) => draw(ctx, geo, attribs),
     }
 }
 
@@ -101,7 +101,7 @@ export function createOffscreenCanvas(
         toPixelSpace: (pt: [number, number]) => toPixelSpace(ctx, pt),
         setRange: (range: [number, number]) => setCanvasRange(ctx, range),
         clear: (clearColor: string) => clear(ctx, clearColor),
-        draw: (geo: GeoData, attribs: Attribs) => draw(ctx, geo, attribs),
+        draw: (geo: GeoData, attribs?: Attribs) => draw(ctx, geo, attribs),
     }
 }
 

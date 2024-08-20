@@ -9,12 +9,14 @@ import { asPoints } from './asPoints'
  * @param shape
  * @param offset - [x, y] | [x, y, z] offset vector
  */
-export function translate(shape: Shape, offset: Vec) {
+export function translate(shape: Shape | Vec2, offset: Vec): Shape | Vec2 {
     if (!Array.isArray(offset) || (offset.length !== 2 && offset.length !== 3)) {
         throw new Error('Offset must be a 2D or 3D vector')
     }
 
-    if (shape instanceof Arc) {
+    if (Array.isArray(shape) && shape.length == 2) {
+        const [x, y] = shape
+        return [x + offset[0], y + offset[1]]
     } else if (shape instanceof Circle) {
         const newPos: Vec2 = [shape.pos[0] + offset[0], shape.pos[1] + offset[1]]
         return new Circle(newPos, shape.r, shape.attribs)

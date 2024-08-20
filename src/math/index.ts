@@ -1,5 +1,8 @@
 // MATH
 export { lerp, lerpPt, midPt, mapRange, mapRange2D, map01toRect } from './math'
+export function degreesToRadians(degrees: number): number {
+    return degrees * (Math.PI / 180)
+}
 
 // VECTOR
 export { add, sub, mul, div } from './vectors'

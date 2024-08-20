@@ -1,5 +1,5 @@
 import { toVec3 } from '../types';
-import { Arc, Circle, Ellipse, Line, Polygon, Polyline, Rectangle, Cube } from '../index';
+import { Circle, Ellipse, Line, Polygon, Polyline, Rectangle, Cube } from '../index';
 import { asPoints } from './asPoints';
 /**
  * Translates given shape by given `offset` vector.
@@ -11,7 +11,9 @@ export function translate(shape, offset) {
     if (!Array.isArray(offset) || (offset.length !== 2 && offset.length !== 3)) {
         throw new Error('Offset must be a 2D or 3D vector');
     }
-    if (shape instanceof Arc) {
+    if (Array.isArray(shape) && shape.length == 2) {
+        const [x, y] = shape;
+        return [x + offset[0], y + offset[1]];
     }
     else if (shape instanceof Circle) {
         const newPos = [shape.pos[0] + offset[0], shape.pos[1] + offset[1]];

@@ -1,4 +1,4 @@
-export type { Vec2, Vec3, Attribs } from './types'
+export type { Vec2, Vec3, Shape, Attribs } from './types'
 
 export { Arc } from './2d/Arc'
 export { Circle } from './2d/Circle'

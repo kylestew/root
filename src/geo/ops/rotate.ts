@@ -9,7 +9,7 @@ import { asPoints } from './asPoints'
  * @param shape: Shape
  * @param theta: number
  */
-export function rotate(shape: Shape, theta: number) {
+export function rotate(shape: Shape | Vec2, theta: number): Shape | Vec2 {
     if (Array.isArray(shape) && shape.length == 2) {
         const [x, y] = shape
         return [x * Math.cos(theta) - y * Math.sin(theta), x * Math.sin(theta) + y * Math.cos(theta)]
