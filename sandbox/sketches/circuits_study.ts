@@ -1,7 +1,9 @@
 import { Vec2, Shape, Polygon, Rectangle, Circle, Line, rotate, translate, pointAt } from 'root/geo'
 import { gaussian, pickRandom } from 'root/random'
-import { add, sub, mulN, normalize, degreesToRadians } from 'root/math'
+import { add, sub, mulN, normalize, degreesToRadians, mul } from 'root/math'
 import { createCanvas } from '../../dist/canvas'
+
+const GRID_SIZE = 0.2
 
 type Orientation = 0 | 90 | 180 | 270
 interface Port {
@@ -62,36 +64,57 @@ class Resistor implements Symbol {
     }
 }
 
-function makeSymbols(): Shape[] {
-    // (1) Place first symbol
-    const pos: Vec2 = [gaussian(0, 0.1), gaussian(0, 0.2)]
+class Wire implements Symbol {}
+
+function placeSymbol(pos: Vec2): Symbol {
+    // TODO: randomly pick one symbol type
     const orientation = pickRandom([0, 90, 180, 270])
-    const size = 0.2
-    const symbol = new Resistor(pos, orientation, size)
-
-    // (2) For each port on symbol, start a current moving away from the symbol
-
-    // DEBUG: container, port point and normals
-    const containerRect = new Rectangle(pos, [size, size], { stroke: 'red', weight: 0.005 })
-    const ports = symbol.ports().map((port) => {
-        return new Circle(port.pos, 0.015, { fill: 'blue' })
-    })
-    const normals = symbol.ports().map((port) => {
-        const bob = add(port.pos, mulN(port.normal, 0.1))
-        return new Line(port.pos, bob, { stroke: 'green', weight: 0.008 })
-    })
-
-    // return symbol
-    return [...symbol.toPolys(), ...ports, ...normals, containerRect]
+    const symbol = new Resistor(pos, orientation, GRID_SIZE)
+    return symbol
 }
 
+function makeSymbols(): Symbol[] {
+    // (1) Place first symbol
+    // const pos: Vec2 = [gaussian(0, 0.1), gaussian(0, 0.2)]
+    const pos: Vec2 = [0, 0]
+    const rootSymbol = placeSymbol(pos)
+
+    // (2) For each port on symbol, start a current moving away from the symbol
+    // what grid position is the next symbol in?
+    // just need a pos vec2
+    rootSymbol.ports().forEach((port) => {
+        const pos = add(port.pos, mulN(port.normal, GRID_SIZE / 2.0))
+        const rect = new Rectangle(pos, [GRID_SIZE, GRID_SIZE], { stroke: 'purple', weight: 0.005 })
+        cmd.draw(rect)
+    })
+    // TODO: fill a symbol in the purple rect
+
+    return [rootSymbol]
+}
+
+let cmd // for easy visual debug
 export function sketch(canvas, palette) {
     const { background, primary, secondary, accent, dark, neutral } = palette
-    const cmd = createCanvas(canvas.width, canvas.height, canvas, [-1, 1])
+    cmd = createCanvas(canvas.width, canvas.height, canvas, [-1, 1])
     cmd.clear(background)
 
     // ADIDAS - all day I dream about symbols
-    const polys = makeSymbols()
+    const symbols = makeSymbols()
 
-    cmd.draw(polys)
+    // draw symbols
+    symbols.forEach((symbol) => {
+        // DEBUG: container, port point and normals
+        cmd.draw(symbol.toPolys())
+        const containerRect = new Rectangle(symbol.pos, [symbol.size, symbol.size], { stroke: 'red', weight: 0.005 })
+        cmd.draw(containerRect)
+        const ports = symbol.ports().map((port) => {
+            return new Circle(port.pos, 0.015, { fill: 'blue' })
+        })
+        cmd.draw(ports)
+        const normals = symbol.ports().map((port) => {
+            const bob = add(port.pos, mulN(port.normal, 0.1))
+            return new Line(port.pos, bob, { stroke: 'green', weight: 0.008 })
+        })
+        cmd.draw(normals)
+    })
 }
