@@ -1,95 +1,150 @@
 import { Vec2, Shape, Polygon, Rectangle, Circle, Line, rotate, translate, pointAt } from 'root/geo'
-import { gaussian, pickRandom } from 'root/random'
-import { add, sub, mulN, normalize, degreesToRadians, mul } from 'root/math'
+import { gaussian, pickRandom, random } from 'root/random'
+import { add, sub, mulN, normalize, mul } from 'root/math'
 import { createCanvas } from '../../dist/canvas'
 
 const GRID_SIZE = 0.2
 
-type Orientation = 0 | 90 | 180 | 270
 interface Port {
+    parent: Symbol
+    connectedTo?: Port
     pos: Vec2
-    type: 'input' | 'output'
     normal: Vec2
 }
 interface Symbol {
-    pos: Vec2
-    orientation: Orientation
-    size: number
-
-    ports(): Port[]
+    ports: Port[]
+    // symbols are in charge of drawing themselves between ports
     toPolys(): Shape[]
 }
 
 class Resistor implements Symbol {
-    pos: Vec2
-    orientation: Orientation
-    size: number
+    ports: Port[]
 
-    constructor(pos: Vec2, orientation: Orientation, size: number) {
-        this.pos = pos
-        this.orientation = orientation
-        this.size = size
-    }
+    constructor(portPositions: Vec2[]) {
+        // we have port positions, so we can determine the rest
+        // give the ports normals facing away from eachother
+        const [posA, posB] = portPositions
 
-    private place(thing: Shape | Vec2): Shape | Vec2 {
-        return translate(rotate(thing, degreesToRadians(this.orientation)), this.pos)
-    }
+        const normalA = normalize(sub(posA, posB)) as Vec2
+        const normalB = normalize(sub(posB, posA)) as Vec2
 
-    ports(): Port[] {
-        // base positions
-        let a = [-this.size / 2, 0] as Vec2
-        let b = [this.size / 2, 0] as Vec2
-
-        const nA = rotate(normalize(a) as Vec2, degreesToRadians(this.orientation)) as Vec2
-        const nB = rotate(normalize(b) as Vec2, degreesToRadians(this.orientation)) as Vec2
-
-        return [
-            { pos: this.place(a) as Vec2, type: 'input', normal: nA },
-            { pos: this.place(b) as Vec2, type: 'output', normal: nB },
+        this.ports = [
+            { pos: posA, normal: normalA, parent: this },
+            { pos: posB, normal: normalB, parent: this },
         ]
     }
 
     toPolys(): Shape[] {
-        // size is meant to be how large the entire symbol is
-        // the body of the resistor is half the size with leads each being 1/4 the size
-        let body: Shape = new Rectangle([0, 0], [this.size / 2.0, this.size / 4.0], { lineJoin: 'round' })
+        // given the port positions, draw a resistor between them
+        const [portA, portB] = this.ports
+        const portAxis = new Line(portA.pos, portB.pos)
 
         // lead lines
-        const [portA, portB] = this.ports()
-        const fullLead = new Line(portA.pos, portB.pos)
-        const leadA = new Line(portA.pos, pointAt(fullLead, 0.25))
-        const leadB = new Line(pointAt(fullLead, 0.75), portB.pos)
+        const leadA = new Line(portA.pos, pointAt(portAxis, 0.25))
+        const leadB = new Line(pointAt(portAxis, 0.75), portB.pos)
 
-        return [this.place(body) as Shape, leadA, leadB]
+        const tempCircle = new Circle(pointAt(portAxis, 0.5), 0.05, { stroke: 'black', weight: 0.01 })
+        // do a Zig Zag pattern!
+
+        //     // resistor body
+        // // a polygon with the portAxis as the center line
+        // const midPoint = portAxis.midpoint();
+        // const direction = portAxis.direction().perpendicular();
+        // const length = portAxis.length() * 0.5; // Adjust the length as needed
+        // const zigzagHeight = length * 0.1; // Zigzag height relative to length
+
+        // // Create a zigzag pattern
+        // const numZigzags = 6;
+        // const step = length / (numZigzags * 2);
+        // let points = [];
+
+        // for (let i = 0; i <= numZigzags; i++) {
+        //     const t = i / numZigzags;
+        //     const p = pointAt(portAxis, 0.25 + t * 0.5);
+        //     const offset = (i % 2 === 0 ? 1 : -1) * zigzagHeight;
+        //     const zigzagPoint = p.add(direction.scale(offset));
+        //     points.push(zigzagPoint);
+        // }
+
+        // Create a polygon for the resistor body
+        // const resistorBody = new Polygon(points);
+
+        return [leadA, leadB, tempCircle]
     }
 }
 
-class Wire implements Symbol {}
+// class Wire implements Symbol {
+//     static createWire(inPort: Port, targetPosition: Vec2, targetSize: number): Wire {}
 
-function placeSymbol(pos: Vec2): Symbol {
-    // TODO: randomly pick one symbol type
-    const orientation = pickRandom([0, 90, 180, 270])
-    const symbol = new Resistor(pos, orientation, GRID_SIZE)
-    return symbol
+//     pos: Vec2
+//     orientation: Orientation
+//     size: number
+
+//     constructor(pos: Vec2, orientation: Orientation, size: number) {
+//         this.pos = pos
+//         this.size = size
+//     }
+// }
+
+function randomSymbolFrom(portOrPos: Port | Vec2): Symbol {
+    // given an incoming port or position,
+    // create a random symbol with a target out port position as well
+
+    // RESISTOR: 2 ports on opposite sides
+    if (Array.isArray(portOrPos)) {
+        // choose any orientation
+        const posA = portOrPos as Vec2
+        const angle = pickRandom([0, 1.0 / 2.0, 1.0, 3.0 / 2.0]) * Math.PI
+        const posB = rotate([posA[0] + GRID_SIZE, posA[1]], angle) as Vec2
+        return new Resistor([posA, posB])
+    } else {
+        // if you want to rotate, you have to do it around the incoming port's normal
+        // being careful not to point backwards
+        // also: attach the port before returning
+        const posA = portOrPos.pos
+        const normA = portOrPos.normal
+        const posB = add(posA, mulN(normA, GRID_SIZE)) as Vec2
+        const symbol = new Resistor([posA, posB])
+        symbol.ports[0].connectedTo = portOrPos
+
+        return symbol
+    }
+
+    // TODO: connect wires
+
+    // const isSymbol = !(rootSymbol instanceof Wire)
+    // const isSymbol = true
+
+    //     //     // if a symbol, connect at least on wire to it
+    //     //     if (isSymbol) {
+    //     //         // connect wire
+    //     //         return Wire.createWire(port, pos, GRID_SIZE)
+    //     //     } else {
+    //     //         // throw for symbol type
+    //     //         console.error('no symbols yet')
+    //     //     }
+
+    // if close enough, auto connect symbol using smart wires
+    // wires are glue, they can have their ports placed to gap offset sections of grid
 }
 
 function makeSymbols(): Symbol[] {
-    // (1) Place first symbol
+    // (1) Determine anchor port position
     // const pos: Vec2 = [gaussian(0, 0.1), gaussian(0, 0.2)]
     const pos: Vec2 = [0, 0]
-    const rootSymbol = placeSymbol(pos)
 
-    // (2) For each port on symbol, start a current moving away from the symbol
-    // what grid position is the next symbol in?
-    // just need a pos vec2
-    rootSymbol.ports().forEach((port) => {
-        const pos = add(port.pos, mulN(port.normal, GRID_SIZE / 2.0))
-        const rect = new Rectangle(pos, [GRID_SIZE, GRID_SIZE], { stroke: 'purple', weight: 0.005 })
-        cmd.draw(rect)
-    })
-    // TODO: fill a symbol in the purple rect
+    // (2) Create root symbol from port positions but don't attach ports
+    const rootSymbol = randomSymbolFrom(pos)
+    console.log(rootSymbol)
 
-    return [rootSymbol]
+    // (3) Grow symbols and wires recursively outwards from root symbol
+    const symbols = rootSymbol.ports
+        .filter((port) => port.connectedTo === undefined)
+        .map((port) => {
+            return randomSymbolFrom(port)
+        })
+    return [rootSymbol, ...symbols]
+    // TODO: go recursive
 }
 
 let cmd // for easy visual debug
@@ -105,13 +160,13 @@ export function sketch(canvas, palette) {
     symbols.forEach((symbol) => {
         // DEBUG: container, port point and normals
         cmd.draw(symbol.toPolys())
-        const containerRect = new Rectangle(symbol.pos, [symbol.size, symbol.size], { stroke: 'red', weight: 0.005 })
-        cmd.draw(containerRect)
-        const ports = symbol.ports().map((port) => {
+
+        const ports = symbol.ports.map((port) => {
             return new Circle(port.pos, 0.015, { fill: 'blue' })
         })
         cmd.draw(ports)
-        const normals = symbol.ports().map((port) => {
+
+        const normals = symbol.ports.map((port) => {
             const bob = add(port.pos, mulN(port.normal, 0.1))
             return new Line(port.pos, bob, { stroke: 'green', weight: 0.008 })
         })
