@@ -1,6 +1,7 @@
-import { Vec2, Shape, Polygon, Rectangle, Circle, Line, rotate, translate, pointAt } from 'root/geo'
+import { Vec2, Shape, Grid, Polygon, Rectangle, Circle, Line, rotate, translate, pointAt } from 'root/geo'
 import { gaussian, pickRandom, random } from 'root/random'
 import { add, sub, mulN, normalize, mul } from 'root/math'
+import { CircleLinePacking } from 'root/algos'
 import { createCanvas } from '../../dist/canvas'
 
 const GRID_SIZE = 0.2
@@ -153,23 +154,41 @@ export function sketch(canvas, palette) {
     cmd = createCanvas(canvas.width, canvas.height, canvas, [-1, 1])
     cmd.clear(background)
 
-    // ADIDAS - all day I dream about symbols
-    const symbols = makeSymbols()
+    // grid based circle packing
+    const grid = new Grid([0, 0], [1.6, 1.6], 12, 12)
+    const centers = grid.centers()
+    const cellSize = grid.cellSize[0]
 
-    // draw symbols
-    symbols.forEach((symbol) => {
-        // DEBUG: container, port point and normals
-        cmd.draw(symbol.toPolys())
+    // attempt a 20% symbol fill
+    const symbolCount = Math.round(centers.length * 0.2)
 
-        const ports = symbol.ports.map((port) => {
-            return new Circle(port.pos, 0.015, { fill: 'blue' })
-        })
-        cmd.draw(ports)
+    const packer = new CircleLinePacking()
+    for (let i = 0; i < symbolCount; i++) {
+        const pos = pickRandom(centers)
+        // double the circle size to always leave a gap
+        packer.attemptPlacement(new Circle(pos, cellSize))
+    }
 
-        const normals = symbol.ports.map((port) => {
-            const bob = add(port.pos, mulN(port.normal, 0.1))
-            return new Line(port.pos, bob, { stroke: 'green', weight: 0.008 })
-        })
-        cmd.draw(normals)
-    })
+    cmd.draw(centers)
+    cmd.draw(packer.packed)
+
+    // // ADIDAS - all day I dream about symbols
+    // const symbols = makeSymbols()
+
+    // // draw symbols
+    // symbols.forEach((symbol) => {
+    //     // DEBUG: container, port point and normals
+    //     cmd.draw(symbol.toPolys())
+
+    //     const ports = symbol.ports.map((port) => {
+    //         return new Circle(port.pos, 0.015, { fill: 'blue' })
+    //     })
+    //     cmd.draw(ports)
+
+    //     const normals = symbol.ports.map((port) => {
+    //         const bob = add(port.pos, mulN(port.normal, 0.1))
+    //         return new Line(port.pos, bob, { stroke: 'green', weight: 0.008 })
+    //     })
+    //     cmd.draw(normals)
+    // })
 }

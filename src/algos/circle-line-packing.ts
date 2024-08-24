@@ -10,11 +10,28 @@ export class CircleLinePacking {
         this.packed = []
     }
 
-    attemptPlacement(shape: Circle | Line, stepSize: number, maxSize: number) {
+    /**
+     * Attempts to place a shape (either a Circle or a Line) within the packing area.
+     * The circle packer will not increase the size of the shape if `stepSize` is undefined.
+     *
+     * @param shape - The shape (Circle or Line) to be placed.
+     * @param stepSize - The size of the step to be taken when extending the shape.
+     * @param maxSize - The maximum size allowed for the shape.
+     *
+     * @returns The placed shape (Circle or Line) if successful, otherwise undefined.
+     */
+    attemptPlacement(shape: Circle | Line, stepSize?: number, maxSize?: number): Circle | Line | undefined {
+        maxSize = maxSize ?? 0
+
         let targetShape = shape
         let placedShape: Circle | Line | undefined = undefined
         while ([...this.obstacles, ...this.packed].every((otherShape) => !intersects(targetShape, otherShape))) {
             placedShape = targetShape
+
+            if (stepSize === undefined) {
+                // if stepSize is undefined, we don't want to increase the size of the shape
+                break
+            }
 
             if (targetShape instanceof Circle) {
                 if (targetShape.r >= maxSize) {
