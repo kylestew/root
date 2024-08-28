@@ -1,5 +1,5 @@
 import { Shape } from '../types'
-import { Arc, Circle, Ellipse, Line, Polygon, Polyline, Rectangle } from '../index'
+import { Arc, Circle, Ellipse, Line, Polygon, Polyline, Rectangle, Sphere } from '../index'
 
 import { dist } from '../../math/vectors'
 import { circleLineIntersection, lineLineIntersection } from '../math/index'
@@ -12,7 +12,7 @@ import { circleLineIntersection, lineLineIntersection } from '../math/index'
  * @returns {boolean|Array|null} - Returns a boolean for circle-circle intersection, an array with the intersection point for ray-line intersection, or null if no intersection.
  */
 export function intersects(a: Shape, b: Shape) {
-    if (a instanceof Circle && b instanceof Circle) {
+    if ((a instanceof Circle && b instanceof Circle) || (a instanceof Sphere && b instanceof Sphere)) {
         return dist(a.pos, b.pos) < a.r + b.r
     } else if (a instanceof Circle && b instanceof Line) {
         return circleLineIntersection(a, b)

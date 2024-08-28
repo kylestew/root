@@ -79,4 +79,31 @@ export class Line {
         const [endX, endY] = this.pts[1]
         return Math.atan2(endY - startY, endX - startX)
     }
+
+    /**
+     * Creates a new Line object that is perpendicular to the current line, passing through the specified point.
+     * @param {Vec2} point - The point through which the perpendicular line will pass.
+     * @returns {Line} A new Line object that is perpendicular to the current line.
+     */
+    perpendicular(point: Vec2): Line {
+        if (!Array.isArray(point) || point.length !== 2 || !point.every(Number.isFinite)) {
+            throw new Error('Point must be an array of two finite numbers')
+        }
+
+        const originalAngle = this.angle
+        const perpendicularAngle = originalAngle + Math.PI / 2
+
+        const halfLength = this.length / 2
+
+        // Calculate the start and end points of the perpendicular line
+        const startX = point[0] - halfLength * Math.cos(perpendicularAngle)
+        const startY = point[1] - halfLength * Math.sin(perpendicularAngle)
+        const endX = point[0] + halfLength * Math.cos(perpendicularAngle)
+        const endY = point[1] + halfLength * Math.sin(perpendicularAngle)
+
+        const start: Vec2 = [startX, startY]
+        const end: Vec2 = [endX, endY]
+
+        return new Line(start, end, this.attribs)
+    }
 }

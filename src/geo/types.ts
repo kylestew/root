@@ -35,9 +35,9 @@ export function toVec3(value: number | Vec2 | Vec3): Vec3 {
 export type Pt = { x: number; y: number } | { x: number; y: number; z: number }
 
 import { Circle, Ellipse, Line, Polygon, Polyline, Quadratic, Rectangle } from './index'
-import { Cube } from './index'
+import { Cube, Sphere } from './index'
 export type Shape2D = Circle | Ellipse | Line | Polygon | Polyline | Quadratic | Rectangle
-export type Shape3D = Cube
+export type Shape3D = Cube | Sphere
 export type Shape = Shape2D | Shape3D
 
 export type GeoData = Shape | Vec2 | GeoData[]

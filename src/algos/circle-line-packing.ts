@@ -1,4 +1,3 @@
-import { Shape } from '../geo/types'
 import { Circle, Line, intersects } from '../geo/index'
 
 export class CircleLinePacking {

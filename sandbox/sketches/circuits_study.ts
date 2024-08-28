@@ -1,10 +1,10 @@
-import { Vec2, Shape, Grid, Polygon, Rectangle, Circle, Line, rotate, translate, pointAt } from 'root/geo'
+import { Vec2, Shape, Grid, Polygon, Rectangle, Circle, Line, rotate, translate, resample, pointAt } from 'root/geo'
 import { gaussian, pickRandom, random } from 'root/random'
 import { add, sub, mulN, normalize, mul } from 'root/math'
 import { CircleLinePacking } from 'root/algos'
 import { createCanvas } from '../../dist/canvas'
 
-const GRID_SIZE = 0.2
+const GRID_SIZE = 0.4
 
 interface Port {
     parent: Symbol
@@ -40,37 +40,24 @@ class Resistor implements Symbol {
         const [portA, portB] = this.ports
         const portAxis = new Line(portA.pos, portB.pos)
 
-        // lead lines
-        const leadA = new Line(portA.pos, pointAt(portAxis, 0.25))
-        const leadB = new Line(pointAt(portAxis, 0.75), portB.pos)
+        const zigzag = resample(portAxis, 24)
 
-        const tempCircle = new Circle(pointAt(portAxis, 0.5), 0.05, { stroke: 'black', weight: 0.01 })
-        // do a Zig Zag pattern!
+        const length = portAxis.length * 0.1
+        const originalAngle = portAxis.angle
+        const angle1 = originalAngle + Math.PI / 2
+        const angle2 = originalAngle - Math.PI / 2
+        const zig = [Math.cos(angle1) * length, Math.sin(angle1) * length] as Vec2
+        const zag = [Math.cos(angle2) * length, Math.sin(angle2) * length] as Vec2
 
-        //     // resistor body
-        // // a polygon with the portAxis as the center line
-        // const midPoint = portAxis.midpoint();
-        // const direction = portAxis.direction().perpendicular();
-        // const length = portAxis.length() * 0.5; // Adjust the length as needed
-        // const zigzagHeight = length * 0.1; // Zigzag height relative to length
+        const firstPt = 6
+        zigzag.pts[firstPt] = add(zigzag.pts[firstPt], zig) as Vec2
+        zigzag.pts[firstPt + 2] = add(zigzag.pts[firstPt + 2], zag) as Vec2
+        zigzag.pts[firstPt + 4] = add(zigzag.pts[firstPt + 4], zig) as Vec2
+        zigzag.pts[firstPt + 6] = add(zigzag.pts[firstPt + 6], zag) as Vec2
+        zigzag.pts[firstPt + 8] = add(zigzag.pts[firstPt + 8], zig) as Vec2
+        zigzag.pts[firstPt + 10] = add(zigzag.pts[firstPt + 10], zag) as Vec2
 
-        // // Create a zigzag pattern
-        // const numZigzags = 6;
-        // const step = length / (numZigzags * 2);
-        // let points = [];
-
-        // for (let i = 0; i <= numZigzags; i++) {
-        //     const t = i / numZigzags;
-        //     const p = pointAt(portAxis, 0.25 + t * 0.5);
-        //     const offset = (i % 2 === 0 ? 1 : -1) * zigzagHeight;
-        //     const zigzagPoint = p.add(direction.scale(offset));
-        //     points.push(zigzagPoint);
-        // }
-
-        // Create a polygon for the resistor body
-        // const resistorBody = new Polygon(points);
-
-        return [leadA, leadB, tempCircle]
+        return [zigzag]
     }
 }
 
@@ -139,13 +126,13 @@ function makeSymbols(): Symbol[] {
     console.log(rootSymbol)
 
     // (3) Grow symbols and wires recursively outwards from root symbol
-    const symbols = rootSymbol.ports
-        .filter((port) => port.connectedTo === undefined)
-        .map((port) => {
-            return randomSymbolFrom(port)
-        })
-    return [rootSymbol, ...symbols]
-    // TODO: go recursive
+    // const symbols = rootSymbol.ports
+    //     .filter((port) => port.connectedTo === undefined)
+    //     .map((port) => {
+    //         return randomSymbolFrom(port)
+    //     })
+    // return [rootSymbol, ...symbols]
+    return [rootSymbol]
 }
 
 let cmd // for easy visual debug

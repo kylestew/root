@@ -23,4 +23,10 @@ export declare class Line {
     get length(): number;
     get centerPt(): Vec2;
     get angle(): number;
+    /**
+     * Creates a new Line object that is perpendicular to the current line, passing through the specified point.
+     * @param {Vec2} point - The point through which the perpendicular line will pass.
+     * @returns {Line} A new Line object that is perpendicular to the current line.
+     */
+    perpendicular(point: Vec2): Line;
 }
