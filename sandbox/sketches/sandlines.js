@@ -1,10 +1,11 @@
 import { createCanvas } from '../../dist/canvas'
 
 import { color } from 'root/color'
-import { random, gaussian } from 'root/random'
+import { random, gaussian, pareto } from 'root/random'
 
-import { Circle, Line, Quadratic } from 'root/geo'
-import { sand } from 'root/mark'
+import { Line, Circle, Rectangle, Quadratic, pointAt } from 'root/geo'
+
+import { fuzz, sand } from 'root/mark'
 
 class SandSweeper {
     // http://www.complexification.net/gallery/machines/sandstroke/appletm/sandStrokem.pde
@@ -68,85 +69,29 @@ class SandStroker {
     }
 }
 
-class SineStroke {
-    constructor(color) {
-        this.color = color
-
-        // frequency of density fluctuation
-        this.frequency = 36.0
-        // modulation (or variance) of density
-        this.amplitude = 0.009
-        this.offset = 0.012
-
-        // unit circle random offset radius
-        this.radius = 0.008
-
-        // will adjust phase each pass
-        this.phase = 0
-    }
-
-    /// one pass over the length of the stroke
-    onePass(x, y, ox, oy) {
-        // Ensure positive offset/amplitude combination
-        if (this.offset - this.amplitude < 0) {
-            throw new Error('Offset must be greater than amplitude to ensure forward progress')
-        }
-
-        // randomize phase shift
-        this.phase += random(-1.0, 1.0)
-
-        const points = []
-        let safety = 1000
-        for (let t = 0; t <= 1; ) {
-            // Add the sine wave output to accumulate t
-            t += this.amplitude * Math.sin(t * this.frequency + this.phase) + this.offset
-
-            // Get base position along line
-            const px = x + (ox - x) * t
-            const py = y + (oy - y) * t
-
-            // Add random offset within unit circle
-            // with a density modulation for unit circle randomness
-            const r = random(0, this.radius * Math.sin(t * this.frequency + this.phase))
-            const theta = Math.random() * Math.PI * 2 // Random angle
-            const offsetX = r * Math.cos(theta)
-            const offsetY = r * Math.sin(theta)
-
-            points.push([px + offsetX, py + offsetY])
-
-            if (safety-- < 0) {
-                console.log('safety')
-                break
-            }
-        }
-
-        return points
-    }
-}
-
 function sandlines(canvas, palette) {
     const { background, primary, secondary, accent, dark, neutral } = palette
     const cmd = createCanvas(canvas.width, canvas.height, canvas, [-1, 1])
     cmd.clear(background)
 
-    const stroker = new SineStroke(color(palette.primary))
+    var line = new Line([-0.5, -0.5], [0.5, 0.5])
+    // shape | noise mult | noise scale | noise walk | min step | deviation | passes
+    let grains = sand(line, 0.005, 3.0, 0.0, 0.002, 0.008, 48)
     // Draw multiple layers of sand
-    for (let layer = 0; layer < 200; layer++) {
-        const grains = stroker.onePass(-0.5, 0.5, 0.5, -0.5)
-        cmd.draw(grains, { fill: palette.secondary + '22', weight: 0.001 })
-    }
+    // var grains = stroker.manyPasses(128)
+    cmd.draw(grains, { fill: primary + '22', weight: 0.002 })
 
-    // circle
+    // // circle
     // const circ = new Circle([0, 0], 0.6)
-    // let grains = sand(circ, 4096, 0.004)
-    // console.log(grains)
+    // stroker = new SineStroke(circ, color(palette.primary))
+    // grains = stroker.manyPasses(128)
     // cmd.draw(grains, { fill: palette.primary + '99', weight: 0.001 })
 
     // line
-    const line = new Line([-0.5, -0.5], [0.5, 0.5])
-    let grains = sand(line, 4096, 0.004, () => Math.random())
-    // grains = sand(line, 4096, 0.004, () => gaussian(0.5, 0.3))
-    cmd.draw(grains, { fill: palette.secondary + '99', weight: 0.001 })
+    line = new Line([0.5, -0.5], [-0.5, 0.5])
+    grains = fuzz(line, 4096 * 2, 0.008, () => Math.random())
+    // let grains = sand(line, 4096, 0.004, () => gaussian(0.5, 0.3))
+    cmd.draw(grains, { fill: primary + '22', weight: 0.002 })
 
     // NO POINT AT for quadratic
     // curves

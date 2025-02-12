@@ -11,7 +11,7 @@ type HSL = {
     l: number
 }
 
-export function color(value: string | number[] | RGB): any {
+export function color(value: string | number[] | RGB | HSL): any {
     // Copy out value to detach from the original object
     value = JSON.parse(JSON.stringify(value))
 

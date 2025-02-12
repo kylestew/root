@@ -39,6 +39,9 @@
     </head>
     <body>
         <canvas id="mainCanvas"></canvas>
+
+        <!-- <script type="module" src="./src/sand-stroke.js"></script> -->
+
         <script type="module">
             import { createCanvas } from 'root/canvas'
             import { randomPalette } from './palettes'
@@ -47,14 +50,16 @@
             // import { sketch } from './sketches/sod_02_craft_and_beauty'
             // import { gridStudies } from './sketches/grid_studies'
             // import { sketch } from './sketches/shader_study'
-            import { sketch } from './sketches/circuits_study'
+            // import { sketch } from './sketches/circuits_study'
+
+            import { sandlines as sketch } from './sketches/sandlines'
+            // import { sketch } from './sketches/sand_spirograph'
 
             const mainCanvas = document.getElementById('mainCanvas')
             mainCanvas.width = 1200
             mainCanvas.height = 1200
             const palette = randomPalette()
 
-            // gridStudies(cmd, palette)
             sketch(mainCanvas, palette)
         </script>
     </body>

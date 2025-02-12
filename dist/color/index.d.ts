@@ -4,5 +4,10 @@ type RGB = {
     b: number;
     a: number;
 };
-export declare function color(value: string | number[] | RGB): any;
+type HSL = {
+    h: number;
+    s: number;
+    l: number;
+};
+export declare function color(value: string | number[] | RGB | HSL): any;
 export {};
