@@ -40,27 +40,25 @@
     <body>
         <canvas id="mainCanvas"></canvas>
 
-        <!-- <script type="module" src="./src/sand-stroke.js"></script> -->
-
         <script type="module">
-            import { createCanvas } from 'root/canvas'
+            import runSketch from './sketches/lib/runSketch'
             import { randomPalette } from './palettes'
 
+            // sketch is given a sized and managed canvas as well as the current color palette
+            // using the color palette is optional, but encouraged
             // import { sketch } from './sketches/sod_00_forward'
             // import { sketch } from './sketches/sod_02_craft_and_beauty'
-            // import { gridStudies } from './sketches/grid_studies'
+            // import { gridStudies as sketch } from './sketches/grid_studies'
             // import { sketch } from './sketches/shader_study'
             // import { sketch } from './sketches/circuits_study'
 
-            import { sandlines as sketch } from './sketches/sandlines'
+            // import { sandlines as sketch } from './sketches/sandlines'
             // import { sketch } from './sketches/sand_spirograph'
 
-            const mainCanvas = document.getElementById('mainCanvas')
-            mainCanvas.width = 1200
-            mainCanvas.height = 1200
-            const palette = randomPalette()
+            import { sketch } from './sketches/2D-projection'
 
-            sketch(mainCanvas, palette)
+            const palette = randomPalette()
+            runSketch(sketch, palette, { canvas: document.getElementById('mainCanvas'), width: 1200, height: 1080 })
         </script>
     </body>
 </html>
