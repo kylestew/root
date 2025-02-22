@@ -1,7 +1,9 @@
 import createCamera from './lib/createCamera.js'
+import { defaultPalette } from './lib/palettes.js'
 
-const sketch = (palette) => {
-    const { background, primary, secondary } = palette
+const sketch = (context, options = {}) => {
+    const { palette = defaultPalette } = options
+    const { background, primary, secondary, dark } = palette
 
     const vertices = [
         [-0.5, 0, -0.5],

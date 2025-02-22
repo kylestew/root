@@ -70,17 +70,20 @@ export function createGLCanvas(
     if (!canvas) {
         // Create a new canvas element if it doesn't exist
         const newCanvas = document.createElement('canvas')
-        // newCanvas.id = canvasId
         document.body.appendChild(newCanvas)
         canvas = newCanvas
     }
     canvas.width = width
     canvas.height = height
 
-    // preserve buffer to CMD+S saving
-    const gl: WebGL2RenderingContext | null = canvas.getContext('webgl2', { preserveDrawingBuffer: true })
+    // Try to get existing context first
+    let gl = canvas.getContext('webgl2') as WebGL2RenderingContext | null
     if (!gl) {
-        throw new Error('WebGL not supported in this browser!')
+        // If no existing context, create new one with preserveDrawingBuffer
+        gl = canvas.getContext('webgl2', { preserveDrawingBuffer: true })
+        if (!gl) {
+            throw new Error('WebGL not supported in this browser!')
+        }
     }
 
     // Declaring variables for buffers

@@ -17,16 +17,19 @@ export function createCanvas(width, height, existingCanvas = undefined, range = 
     if (!canvas) {
         // Create a new canvas element if it doesn't exist
         const newCanvas = document.createElement('canvas');
-        // newCanvas.id = canvasId
         document.body.appendChild(newCanvas);
         canvas = newCanvas;
     }
     canvas.width = width;
     canvas.height = height;
-    // get canvas context
-    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    // Try to get existing context first
+    let ctx = canvas.getContext('2d');
     if (!ctx) {
-        throw new Error('Canvas not supported in this browser!');
+        // If no existing context, create new one with willReadFrequently
+        ctx = canvas.getContext('2d', { willReadFrequently: true });
+        if (!ctx) {
+            throw new Error('Canvas not supported in this browser!');
+        }
     }
     let rangeInfo;
     if (range != undefined) {

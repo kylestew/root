@@ -55,10 +55,11 @@
             // import { sandlines as sketch } from './sketches/sandlines'
             // import { sketch } from './sketches/sand_spirograph'
 
-            import { sketch } from './sketches/2D-projection'
+            // import { sketch } from './sketches/2D-projection'
+            import { sketch } from './sketches/heightfields'
 
             const palette = randomPalette()
-            runSketch(sketch, palette, { canvas: document.getElementById('mainCanvas'), width: 1200, height: 1080 })
+            runSketch(sketch, { palette }, { canvas: document.getElementById('mainCanvas'), width: 1200, height: 1080 })
         </script>
     </body>
 </html>

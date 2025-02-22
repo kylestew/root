@@ -1,9 +1,13 @@
-export default function runSketch(sketch, defaultPalette, { canvas, width, height }) {
-    // Run the sketch - expect to get back render function
-    const renderer = sketch(defaultPalette)
+export default function runSketch(sketch, options, { canvas, width, height }) {
+    // Check if sketch requests WebGL context
+    const useWebGL = sketch.webgl || false
+    const context = useWebGL ? canvas.getContext('webgl2', { preserveDrawingBuffer: true }) : canvas.getContext('2d')
+    if (!context) {
+        throw new Error(`Failed to get ${useWebGL ? 'WebGL2' : '2D'} context`)
+    }
 
-    // TODO: allow 3D canvas
-    const context = canvas.getContext('2d')
+    // Run the sketch - expect to get back render function
+    const renderer = sketch(context, options)
 
     let pixelRatio = window.devicePixelRatio || 1
     let lastTime = Date.now()
@@ -22,10 +26,6 @@ export default function runSketch(sketch, defaultPalette, { canvas, width, heigh
     // NOTE: no resize event listener - assuming fixed size canvas
     // window.addEventListener('resize', resize)
     resize()
-
-    // look at meta for animation toggle
-    const animated = sketch.animated || false
-    if (animated) start()
 
     function start() {
         lastTime = Date.now()
@@ -47,9 +47,18 @@ export default function runSketch(sketch, defaultPalette, { canvas, width, heigh
     }
 
     function render(deltaTime = 0) {
-        context.save()
-        context.scale(pixelRatio, pixelRatio)
+        if (!useWebGL) {
+            context.save()
+            context.scale(pixelRatio, pixelRatio)
+        }
         renderer({ canvas, context, width, height, pixelRatio, time, deltaTime })
-        context.restore()
+        if (!useWebGL) {
+            context.restore()
+        }
     }
+
+    // look at meta for animation toggle
+    const animated = sketch.animated || false
+    if (animated) start()
+    else render() // run once if not animated
 }
