@@ -1,4 +1,26 @@
-export default function runSketch(sketch, options, { canvas, width, height }) {
+interface SketchOptions {
+    canvas: HTMLCanvasElement
+    width: number
+    height: number
+}
+
+interface SketchContext {
+    canvas: HTMLCanvasElement
+    context: CanvasRenderingContext2D | WebGL2RenderingContext
+    width: number
+    height: number
+    pixelRatio: number
+    time: number
+    deltaTime: number
+}
+
+interface Sketch {
+    (context: CanvasRenderingContext2D | WebGL2RenderingContext, options: any): (props: SketchContext) => void
+    webgl?: boolean
+    animated?: boolean
+}
+
+export function runSketch(sketch: Sketch, options: any, { canvas, width, height }: SketchOptions): void {
     // Check if sketch requests WebGL context
     const useWebGL = sketch.webgl || false
     const context = useWebGL ? canvas.getContext('webgl2', { preserveDrawingBuffer: true }) : canvas.getContext('2d')
@@ -6,13 +28,16 @@ export default function runSketch(sketch, options, { canvas, width, height }) {
         throw new Error(`Failed to get ${useWebGL ? 'WebGL2' : '2D'} context`)
     }
 
+    // Type assertion to tell TypeScript that context is definitely the union type we want
+    const ctx = context as CanvasRenderingContext2D | WebGL2RenderingContext
+
     // Run the sketch - expect to get back render function
-    const renderer = sketch(context, options)
+    const renderer = sketch(ctx, options)
 
     let pixelRatio = window.devicePixelRatio || 1
     let lastTime = Date.now()
     let time = 0
-    let raf = null
+    let raf: number | null = null
 
     function resize() {
         pixelRatio = window.devicePixelRatio
@@ -33,7 +58,9 @@ export default function runSketch(sketch, options, { canvas, width, height }) {
     }
 
     function stop() {
-        cancelAnimationFrame(raf)
+        if (raf !== null) {
+            cancelAnimationFrame(raf)
+        }
         raf = null
     }
 
@@ -47,13 +74,13 @@ export default function runSketch(sketch, options, { canvas, width, height }) {
     }
 
     function render(deltaTime = 0) {
-        if (!useWebGL) {
-            context.save()
-            context.scale(pixelRatio, pixelRatio)
-        }
-        renderer({ canvas, context, width, height, pixelRatio, time, deltaTime })
-        if (!useWebGL) {
-            context.restore()
+        if (ctx instanceof CanvasRenderingContext2D) {
+            ctx.save()
+            ctx.scale(pixelRatio, pixelRatio)
+            renderer({ canvas, context: ctx, width, height, pixelRatio, time, deltaTime })
+            ctx.restore()
+        } else if (ctx instanceof WebGL2RenderingContext) {
+            renderer({ canvas, context: ctx, width, height, pixelRatio, time, deltaTime })
         }
     }
 

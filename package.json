@@ -23,6 +23,10 @@
             "types": "./dist/random/index.d.ts",
             "default": "./dist/random/index.js"
         },
+        "./sketch": {
+            "types": "./dist/sketch/index.d.ts",
+            "default": "./dist/sketch/index.js"
+        },
         "./color": {
             "types": "./dist/color/index.d.ts",
             "default": "./dist/color/index.js"
