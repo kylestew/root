@@ -7,8 +7,6 @@ export function runSketch(sketch, options, { canvas, width, height }) {
     }
     // Type assertion to tell TypeScript that context is definitely the union type we want
     const ctx = context;
-    // Run the sketch - expect to get back render function
-    const renderer = sketch(ctx, options);
     let pixelRatio = window.devicePixelRatio || 1;
     let lastTime = Date.now();
     let time = 0;
@@ -24,6 +22,8 @@ export function runSketch(sketch, options, { canvas, width, height }) {
     // NOTE: no resize event listener - assuming fixed size canvas
     // window.addEventListener('resize', resize)
     resize();
+    // Run the sketch - expect to get back render function
+    const renderer = sketch(ctx, options);
     function start() {
         lastTime = Date.now();
         raf = requestAnimationFrame(animate);
