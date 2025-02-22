@@ -20,21 +20,29 @@ interface Sketch {
     animated?: boolean
 }
 
-export function runSketch(sketch: Sketch, options: any, { canvas, width, height }: SketchOptions): void {
+export function runSketch(sketch: Sketch, options: any): void {
+    const canvas = options.canvas
+    const width = options.width
+    const height = options.height
+
     // Check if sketch requests WebGL context
     const useWebGL = sketch.webgl || false
     const context = useWebGL ? canvas.getContext('webgl2', { preserveDrawingBuffer: true }) : canvas.getContext('2d')
     if (!context) {
         throw new Error(`Failed to get ${useWebGL ? 'WebGL2' : '2D'} context`)
     }
-
-    // Type assertion to tell TypeScript that context is definitely the union type we want
     const ctx = context as CanvasRenderingContext2D | WebGL2RenderingContext
 
     let pixelRatio = window.devicePixelRatio || 1
     let lastTime = Date.now()
     let time = 0
     let raf: number | null = null
+
+    // Run the sketch - expect to get back render function
+    const renderer = sketch(ctx, options)
+
+    // if renderer doesn't return anything, assume its complete
+    if (renderer === undefined) return
 
     function resize() {
         pixelRatio = window.devicePixelRatio
@@ -48,9 +56,6 @@ export function runSketch(sketch: Sketch, options: any, { canvas, width, height 
     // NOTE: no resize event listener - assuming fixed size canvas
     // window.addEventListener('resize', resize)
     resize()
-
-    // Run the sketch - expect to get back render function
-    const renderer = sketch(ctx, options)
 
     function start() {
         lastTime = Date.now()

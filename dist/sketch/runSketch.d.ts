@@ -1,8 +1,3 @@
-interface SketchOptions {
-    canvas: HTMLCanvasElement;
-    width: number;
-    height: number;
-}
 interface SketchContext {
     canvas: HTMLCanvasElement;
     context: CanvasRenderingContext2D | WebGL2RenderingContext;
@@ -17,5 +12,5 @@ interface Sketch {
     webgl?: boolean;
     animated?: boolean;
 }
-export declare function runSketch(sketch: Sketch, options: any, { canvas, width, height }: SketchOptions): void;
+export declare function runSketch(sketch: Sketch, options: any): void;
 export {};
