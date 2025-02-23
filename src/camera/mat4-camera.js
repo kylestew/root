@@ -1,5 +1,5 @@
 // Camera projection utilities
-import { mat4 } from 'https://cdn.jsdelivr.net/npm/gl-matrix@3.3.0/esm/index.js'
+import { mat4 } from 'gl-matrix'
 
 var NEAR_RANGE = 0
 var FAR_RANGE = 1

@@ -1,6 +1,6 @@
 {
     "name": "root",
-    "version": "0.2.7",
+    "version": "0.2.8",
     "description": "Root of it all",
     "exports": {
         ".": {
@@ -50,6 +50,10 @@
         "./pixel/shaders": {
             "types": "./dist/pixel/shaders/index.d.ts",
             "default": "./dist/pixel/shaders/index.js"
+        },
+        "./camera": {
+            "types": "./dist/camera/index.d.ts",
+            "default": "./dist/camera/index.js"
         }
     },
     "type": "module",
@@ -64,6 +68,7 @@
         "typescript": "^5.5.3"
     },
     "dependencies": {
-        "bezier-js": "^6.1.4"
+        "bezier-js": "^6.1.4",
+        "gl-matrix": "^3.4.3"
     }
 }

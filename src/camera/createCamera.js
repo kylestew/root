@@ -1,4 +1,4 @@
-import { mat4, vec3 } from 'https://cdn.jsdelivr.net/npm/gl-matrix@3.3.0/esm/index.js'
+import { mat4, vec3 } from 'gl-matrix'
 
 import { cameraProject, createOrthoFromView, createPerspectiveFromView } from './mat4-camera.js'
 

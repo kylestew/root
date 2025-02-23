@@ -1,4 +1,4 @@
-import createCamera from './lib/createCamera.js'
+import { createCamera } from 'root/camera'
 import { defaultPalette } from './lib/palettes.js'
 
 const sketch = (context, options = {}) => {
