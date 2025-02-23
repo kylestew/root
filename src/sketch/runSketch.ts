@@ -48,8 +48,8 @@ export function runSketch(sketch: Sketch, options: any): void {
         pixelRatio = window.devicePixelRatio
         canvas.width = width * pixelRatio
         canvas.height = height * pixelRatio
-        canvas.style.width = `${width}px`
-        canvas.style.height = `${height}px`
+        // canvas.style.width = `${width}px`
+        // canvas.style.height = `${height}px`
 
         // render()
     }

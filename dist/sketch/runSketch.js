@@ -22,8 +22,8 @@ export function runSketch(sketch, options) {
         pixelRatio = window.devicePixelRatio;
         canvas.width = width * pixelRatio;
         canvas.height = height * pixelRatio;
-        canvas.style.width = `${width}px`;
-        canvas.style.height = `${height}px`;
+        // canvas.style.width = `${width}px`
+        // canvas.style.height = `${height}px`
         // render()
     }
     // NOTE: no resize event listener - assuming fixed size canvas
