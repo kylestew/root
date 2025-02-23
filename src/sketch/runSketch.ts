@@ -15,7 +15,8 @@ interface SketchContext {
 }
 
 interface Sketch {
-    (context: CanvasRenderingContext2D | WebGL2RenderingContext, options: any): (props: SketchContext) => void
+    (context: CanvasRenderingContext2D | WebGL2RenderingContext, options: any): ((props: SketchContext) => void) | null
+
     webgl?: boolean
     animated?: boolean
 }
@@ -42,7 +43,7 @@ export function runSketch(sketch: Sketch, options: any): void {
     const renderer = sketch(ctx, options)
 
     // if renderer doesn't return anything, assume its complete
-    if (renderer === undefined) return
+    if (renderer === undefined || render === null) return
 
     function resize() {
         pixelRatio = window.devicePixelRatio
@@ -82,10 +83,10 @@ export function runSketch(sketch: Sketch, options: any): void {
         if (ctx instanceof CanvasRenderingContext2D) {
             ctx.save()
             ctx.scale(pixelRatio, pixelRatio)
-            renderer({ canvas, context: ctx, width, height, pixelRatio, time, deltaTime })
+            renderer!({ canvas, context: ctx, width, height, pixelRatio, time, deltaTime })
             ctx.restore()
         } else if (ctx instanceof WebGL2RenderingContext) {
-            renderer({ canvas, context: ctx, width, height, pixelRatio, time, deltaTime })
+            renderer!({ canvas, context: ctx, width, height, pixelRatio, time, deltaTime })
         }
     }
 

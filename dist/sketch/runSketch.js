@@ -16,7 +16,7 @@ export function runSketch(sketch, options) {
     // Run the sketch - expect to get back render function
     const renderer = sketch(ctx, options);
     // if renderer doesn't return anything, assume its complete
-    if (renderer === undefined)
+    if (renderer === undefined || render === null)
         return;
     function resize() {
         pixelRatio = window.devicePixelRatio;
