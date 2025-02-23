@@ -14,7 +14,7 @@ interface SketchContext {
     deltaTime: number
 }
 
-interface Sketch {
+export interface Sketch {
     (context: CanvasRenderingContext2D | WebGL2RenderingContext, options: any): ((props: SketchContext) => void) | null
 
     webgl?: boolean
