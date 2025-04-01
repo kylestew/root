@@ -13,3 +13,5 @@ export {
 export { seed, simplex2, simplex3, perlin2, perlin3 } from './noise'
 
 export { uniform1D, uniform2D, gaussian1D, gaussian2D } from './distros'
+
+export { fbm2D } from './fbm'
